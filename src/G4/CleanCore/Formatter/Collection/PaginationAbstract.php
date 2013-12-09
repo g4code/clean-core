@@ -59,8 +59,8 @@ abstract class PaginationAbstract extends CollectionAbstract
         $iteratorFactory  = new \G4\CleanCore\Formatter\Collection\IteratorFactory($this->_getResourceCollection());
         $this->_paginator = new \Zend\Paginator\Paginator($iteratorFactory->getIterator());
         $this->_paginator
-            ->setItemCountPerPage($this->_getResourcePage())
-            ->setCurrentPageNumber($this->_getResourcePerPage());
+            ->setItemCountPerPage($this->_getResourcePerPage())
+            ->setCurrentPageNumber($this->_getResourcePage());
 
         return $this;
     }
