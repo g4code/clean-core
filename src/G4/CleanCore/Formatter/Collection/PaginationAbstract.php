@@ -37,14 +37,32 @@ abstract class PaginationAbstract extends CollectionAbstract
         );
     }
 
+    protected function _getResourcePage()
+    {
+        return empty($this->_resource['page'])
+            ? 1
+            : $this->_resource['page'];
+    }
+
+    protected function _getResourcePerPage()
+    {
+        return empty($this->_resource['per_page'])
+            ? 1
+            : $this->_resource['per_page'];
+    }
+
+    /**
+     * @return \G4\CleanCore\Formatter\Collection\PaginationAbstract
+     */
     protected function _setPaginator()
     {
-        $iterator = new \Zend\Paginator\Adapter\Iterator($this->_getResourceCollection());
-
-        $this->_paginator = new \Zend\Paginator\Paginator($iterator);
+        $iteratorFactory  = new \G4\CleanCore\Formatter\Collection\IteratorFactory($this->_getResourceCollection());
+        $this->_paginator = new \Zend\Paginator\Paginator($iteratorFactory->getIterator());
         $this->_paginator
-            ->setItemCountPerPage($this->_resource['per_page'])
-            ->setCurrentPageNumber($this->_resource['page']);
+            ->setItemCountPerPage($this->_getResourcePage())
+            ->setCurrentPageNumber($this->_getResourcePerPage());
+
+        return $this;
     }
 
     private function _hasItems()

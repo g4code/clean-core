@@ -43,6 +43,8 @@ abstract class CollectionAbstract extends FormatterAbstract
 
     protected function _getResourceCollection()
     {
-        return $this->_resource['collection'];
+        return empty($this->_resource['collection'])
+            ? array()
+            : $this->_resource['collection'];
     }
 }
