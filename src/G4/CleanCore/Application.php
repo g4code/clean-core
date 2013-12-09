@@ -2,6 +2,7 @@
 
 namespace G4\CleanCore;
 
+use G4\CleanCore\Controller\Front;
 use G4\CleanCore\Response\Response;
 use G4\CleanCore\Service\ServiceAbstract;
 use G4\CleanCore\Request\Request;
@@ -11,9 +12,9 @@ class Application
 {
 
     /**
-     * @var Dispatcher
+     * @var \G4\CleanCore\Controller\Front
      */
-    private $_dispatcher;
+    private $_frontController;
 
     /**
      * @var Request
@@ -30,23 +31,16 @@ class Application
      */
     private $_appNamespace;
 
-    /**
-     * @var \G4\CleanCore\Service\ServiceAbstract
-     */
-    private $_service;
-
 
     /**
-     * @return \G4\CleanCore\Dispatcher\Dispatcher
+     * @return \G4\CleanCore\Controller\Front
      */
-    public function getDispatcher()
+    public function getFrontController()
     {
-        if (!$this->_dispatcher instanceof Dispatcher)
-        {
-            $this->_dispatcher = new Dispatcher();
+        if (!$this->_frontController instanceof Front) {
+            $this->_frontController = new Front();
         }
-
-        return $this->_dispatcher;
+        return $this->_frontController;
     }
 
     /**
@@ -59,16 +53,14 @@ class Application
 
     public function run()
     {
-        $this->getDispatcher()
-            ->setRequest($this->_request)
+        $this->getFrontController()
             ->setAppNamespace($this->_appNamespace)
-            ->dispatch();
+            ->setDispatcher(new Dispatcher())
+            ->setRequest($this->_request)
+            ->setResponse(new Response())
+            ->run();
 
-//TODO: Drasko: refactor this!!!
-        $this->_service  = $this->getDispatcher()->getService();
-        $this->_response = $this->_service === null
-            ? $this->_get404()
-            : $this->_service->getFormattedResponse();
+        $this->_response = $this->getFrontController()->getResponse();
 
         return $this;
     }
@@ -92,22 +84,4 @@ class Application
         $this->_request = $request;
         return $this;
     }
-
-    /**
-     * @param Dispatcher $dispatcher
-     * @return \G4\CleanCore\Application
-     */
-    public function setDispatcher(Dispatcher $dispatcher)
-    {
-        $this->_dispatcher = $dispatcher;
-        return $this;
-    }
-//TODO: Drasko: refactor this!!!
-    private function _get404()
-    {
-        $response = new Response();
-
-        return $response->setHttpResponseCode(404);
-    }
-
 }

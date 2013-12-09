@@ -20,6 +20,8 @@ abstract class UseCaseAbstract implements UseCaseInterface
      */
     protected $_response;
 
+    private $_formatter;
+
 
     public function __construct($request = null)
     {
@@ -38,6 +40,15 @@ abstract class UseCaseAbstract implements UseCaseInterface
      */
     public function getResponse()
     {
+        if (method_exists($this, 'getFormatterInstance') && $this->_response->hasResponseObject()) {
+
+            $formattedResource = $this->getFormatterInstance()
+                ->setResource($this->_response->getResponseObject())
+                ->format();
+
+            $this->_response->setResponseObject($formattedResource);
+        }
+
         return $this->_response;
     }
 

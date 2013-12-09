@@ -2,27 +2,31 @@
 
 namespace G4\CleanCore\Service;
 
-use Api\Authenticate\Authenticate;
 use G4\CleanCore\Response\Response;
 use G4\CleanCore\Request\Request;
 use G4\CleanCore\Validator\Validator;
-use Gee\Log\Writer;
+use G4\CleanCore\UseCase\UseCaseAbstract;
 
 abstract class ServiceAbstract
 {
 
     /**
-     * @var Response
-     */
-    protected $_response;
-
-    /**
-     * @var Request
+     * @var \G4\CleanCore\Request\Request
      */
     protected $_request;
 
     /**
-     * @var Validator
+     * @var \G4\CleanCore\Response\Response
+     */
+    protected $_response;
+
+    /**
+     * @var \G4\CleanCore\UseCase\UseCaseAbstract
+     */
+    private $_useCase;
+
+    /**
+     * @var \G4\CleanCore\Validator\Validator
      */
     protected $_validator;
 
@@ -30,7 +34,6 @@ abstract class ServiceAbstract
     //TODO: Drasko: move to setters!
     public function __construct()
     {
-        $this->_response  = new Response();
         $this->_validator = new Validator();
     }
 
@@ -44,7 +47,9 @@ abstract class ServiceAbstract
 
     public function getFormattedResponse()
     {
-        $this->_response->setResponseObject($this->_getFormattedResource());
+        if (!method_exists($this->_useCase, 'getFormatterInstance')) {
+            $this->_response->setResponseObject($this->_getFormattedResource());
+        }
 
         return $this->_response;
     }
@@ -65,19 +70,19 @@ abstract class ServiceAbstract
 
     public function runUseCase()
     {
-        $useCase = $this->_getUseCaseInstance();
-        $useCase
+        $this->_useCase = $this->_getUseCaseInstance();
+        $this->_useCase
             ->setRequest($this->_request)
             ->setResponse($this->_response)
             ->run();
 
-        $this->_response = $useCase->getResponse();
+        $this->_response = $this->_useCase->getResponse();
 
         return $this;
     }
 
     /**
-     * @param Request $request
+     * @param \G4\CleanCore\Request\Request $request
      * @return \G4\CleanCore\Service\ServiceAbstract
      */
     public function setRequest(Request $request)
@@ -86,16 +91,29 @@ abstract class ServiceAbstract
         return $this;
     }
 
-    abstract protected function _getFormatterInstance();
+    /**
+     * @param \G4\CleanCore\Response\Response $response
+     * @return \G4\CleanCore\Service\ServiceAbstract
+     */
+    public function setResponse(Response $response)
+    {
+        $this->_response = $response;
+        return $this;
+    }
 
     abstract protected function _getUseCaseInstance();
 
     private function _getFormattedResource()
     {
         return $this->_response->hasResponseObject()
-            ? $this->_getFormatterInstance()
-                ->setResource($this->_response->getResponseObject())
-                ->format()
+            ? $this->_formatterFactory()
             : null;
+    }
+
+    private function _formatterFactory()
+    {
+        return $this->_getFormatterInstance()
+            ->setResource($this->_response->getResponseObject())
+            ->format();
     }
 }

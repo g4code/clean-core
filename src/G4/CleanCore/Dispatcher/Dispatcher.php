@@ -35,25 +35,24 @@ class Dispatcher
     }
 
 
-    public function dispatch()
-    {
-        $this->_constructFullServiceName()
-             ->_serviceFactory();
-
-        if ($this->_isCorrectType()) {
-
-            $this->_service
-                ->setRequest($this->_request)
-                ->run();
-        }
-    }
-
     /**
      * @return \G4\CleanCore\Service\ServiceAbstract
      */
     public function getService()
     {
         return $this->_service;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isDispatchable()
+    {
+        $this
+            ->_constructFullServiceName()
+            ->_serviceFactory();
+
+        return $this->_service instanceof ServiceAbstract;
     }
 
     /**
@@ -107,14 +106,6 @@ class Dispatcher
                 "/\-(.)/e", "strtoupper('\\1')",
                 $this->_request->getResourceName()
             ));
-    }
-
-    /**
-     * @return boolean
-     */
-    private function _isCorrectType()
-    {
-        return $this->_service instanceof ServiceAbstract;
     }
 
     /**
