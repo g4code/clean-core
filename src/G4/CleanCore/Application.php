@@ -12,6 +12,11 @@ class Application
 {
 
     /**
+     * @var \G4\CleanCore\Bootstrap\Factory
+     */
+    private $_bootstrapFactory;
+
+    /**
      * @var \G4\CleanCore\Controller\Front
      */
     private $_frontController;
@@ -33,6 +38,17 @@ class Application
 
 
     /**
+     * @return \G4\CleanCore\Bootstrap\Factory
+     */
+    public function getBootstrapFactory()
+    {
+        if (!$this->_bootstrapFactory instanceof \G4\CleanCore\Bootstrap\Factory) {
+            $this->_bootstrapFactory = new \G4\CleanCore\Bootstrap\Factory();
+        }
+        return $this->_bootstrapFactory;
+    }
+
+    /**
      * @return \G4\CleanCore\Controller\Front
      */
     public function getFrontController()
@@ -48,19 +64,23 @@ class Application
      */
     public function getResponse()
     {
+        if (!$this->_response instanceof Response) {
+            $this->_response = new Response();
+        }
         return $this->_response;
     }
 
     public function run()
     {
-        $this->getFrontController()
-            ->setAppNamespace($this->_appNamespace)
-            ->setDispatcher(new Dispatcher())
-            ->setRequest($this->_request)
-            ->setResponse(new Response())
-            ->run();
+        try {
+            $this
+                ->_initBootstrap()
+                ->_runFrontController();
 
-        $this->_response = $this->getFrontController()->getResponse();
+        } catch(\Exception $exception) {
+
+            $this->_exception($exception->getCode());
+        }
 
         return $this;
     }
@@ -82,6 +102,39 @@ class Application
     public function setRequest(Request $request)
     {
         $this->_request = $request;
+        return $this;
+    }
+
+    private function _exception($code)
+    {
+        $this->getResponse()->setHttpResponseCode($code);
+    }
+
+    /**
+     * @return \G4\CleanCore\Application
+     */
+    private function _initBootstrap()
+    {
+        $this->getBootstrapFactory()
+            ->setAppNamespace($this->_appNamespace)
+            ->setRequest($this->_request)
+            ->initBootstrap();
+        return $this;
+    }
+
+    /**
+     * @return \G4\CleanCore\Application
+     */
+    private function _runFrontController()
+    {
+        $this->getFrontController()
+            ->setAppNamespace($this->_appNamespace)
+            ->setDispatcher(new Dispatcher())
+            ->setRequest($this->_request)
+            ->setResponse($this->getResponse())
+            ->run();
+        //TODO: Drasko: remove this after UseCase Response dependency refactoring!
+        $this->_response = $this->getFrontController()->getResponse();
         return $this;
     }
 }
