@@ -23,10 +23,8 @@ abstract class UseCaseAbstract implements UseCaseInterface
     private $_formatter;
 
 
-    public function __construct($request = null)
+    public function __construct()
     {
-        //TODO: Drasko: change this when all the services are in Api\Service namespace
-        $this->setRequest($request);
         $this->setResponse(new Response());
     }
 
