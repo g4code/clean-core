@@ -86,5 +86,6 @@ class Front
             ->run();
 
         $this->_response = $this->_service->getFormattedResponse();
+        var_dump($this->_response);die;
     }
 }

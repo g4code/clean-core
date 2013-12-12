@@ -17,6 +17,11 @@ class Application
     private $_bootstrapFactory;
 
     /**
+     * @var \G4\CleanCore\Error\Error
+     */
+    private $_error;
+
+    /**
      * @var \G4\CleanCore\Controller\Front
      */
     private $_frontController;
@@ -46,6 +51,17 @@ class Application
             $this->_bootstrapFactory = new \G4\CleanCore\Bootstrap\Factory();
         }
         return $this->_bootstrapFactory;
+    }
+
+    /**
+     * @return \G4\CleanCore\Error\Error
+     */
+    public function getError()
+    {
+        if (!$this->_error instanceof \G4\CleanCore\Error\Error) {
+            $this->_error = new \G4\CleanCore\Error\Error();
+        }
+        return $this->_error;
     }
 
     /**
@@ -79,7 +95,10 @@ class Application
 
         } catch(\Exception $exception) {
 
-            $this->_exception($exception->getCode());
+            $this->getError()
+                ->setException($exception)
+                ->setResponse($this->getResponse())
+                ->manage();
         }
 
         return $this;
@@ -103,11 +122,6 @@ class Application
     {
         $this->_request = $request;
         return $this;
-    }
-
-    private function _exception($code)
-    {
-        $this->getResponse()->setHttpResponseCode($code);
     }
 
     /**

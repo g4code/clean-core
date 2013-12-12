@@ -47,6 +47,11 @@ class Response
         return Code::asMessage($this->getHttpResponseCode());
     }
 
+    public function getResponseMessage()
+    {
+        return $this->_responseMessage;
+    }
+
     public function getResponseObject()
     {
         return $this->_responseObject;
@@ -76,7 +81,6 @@ class Response
         return $this;
     }
 
-    //TODO: Drasko: Remove this!!!
     public function setResponseMessage($value)
     {
         $this->_responseMessage = $value;

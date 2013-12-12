@@ -66,4 +66,9 @@ class Code
             ? self::$_messages[$code]
             : 'Unknown';
     }
+
+    public static function isValid($code)
+    {
+        return in_array($code, self::$_messages);
+    }
 }
