@@ -18,8 +18,6 @@ class Error
             ->setResponseMessage($this->_exception->getMessage())
             ->setApplicationResponseCode($this->_exception->getCode())
             ->setHttpResponseCode($this->_getHttpCode());
-
-//         var_dump($this->_exception);die;
     }
 
     public function setException(\Exception $exception)
