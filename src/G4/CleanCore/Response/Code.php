@@ -69,6 +69,6 @@ class Code
 
     public static function isValid($code)
     {
-        return in_array($code, self::$_messages);
+        return array_key_exists($code, self::$_messages);
     }
 }
