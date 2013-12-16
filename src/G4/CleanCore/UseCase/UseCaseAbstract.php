@@ -51,6 +51,27 @@ abstract class UseCaseAbstract implements UseCaseInterface
     }
 
     /**
+     * Factory method for use of a new UseCase class
+     * Returns whole resource or just one part
+     *
+     * @param string $useCaseName
+     * @param string $resourcePart
+     */
+    public function reference($useCaseName, $resourcePart = null)
+    {
+        //TODO: Drasko: move to Factory class!!!
+        $useCase = new $useCaseName();
+        $useCase
+            ->setRequest($this->_request)
+            ->run();
+        $response = $useCase->getResponse();
+
+        return $resourcePart === null
+            ? $response
+            : $response->getResponseObjectPart($resourcePart);
+    }
+
+    /**
      * @param Request $request
      * @return UseCaseAbstract
      */
