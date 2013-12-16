@@ -16,6 +16,10 @@
     {
         "name": "Dejan Samardzija",
         "email": "samardzijadejan@gmail.com"
+    },
+    {
+        "name": "Ivan Krickovic",
+        "email": "ivan@elupra.com"
     }
   ],
   "autoload": {
