@@ -67,7 +67,7 @@ abstract class UseCaseAbstract implements UseCaseInterface
         $response = $useCase->getResponse();
 
         return $resourcePart === null
-            ? $response
+            ? $response->getResponseObject()
             : $response->getResponseObjectPart($resourcePart);
     }
 
