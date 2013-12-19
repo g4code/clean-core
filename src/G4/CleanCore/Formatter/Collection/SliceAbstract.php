@@ -21,7 +21,7 @@ abstract class SliceAbstract extends CollectionAbstract
 
     protected function _getPaginatorResponse()
     {
-        $totalItems = $this->_getResourceCollection()->getTotalItemsCount();
+        $totalItems = $this->_getTotalItemsCount();
 
         return array(
             'current_page_number' => $this->_resource['page'],
@@ -35,7 +35,20 @@ abstract class SliceAbstract extends CollectionAbstract
 
     private function _hasItems()
     {
-        return $this->_getResourceCollection()->count() > 0;
+        $collection = $this->_getResourceCollection();
+
+        return ($collection instanceof \Application_Model_Collection_Content )
+            ? $collection->count() > 0
+            : count($collection) > 0;
+    }
+
+    private function _getTotalItemsCount()
+    {
+        $collection = $this->_getResourceCollection();
+
+        return ($collection instanceof \Application_Model_Collection_Content )
+            ? $collection->getTotalItemsCount()
+            : count($collection);
     }
 
 }
