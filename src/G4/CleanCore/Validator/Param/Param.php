@@ -18,6 +18,6 @@ class Param extends ParamAbstract
             ? $this->_meta['type']
             : 'G4\CleanCore\Validator\Param\Type\\'.$this->_meta['type'];
 
-        return new $className($this->_value, $this->_meta);
+        return new $className($this->_name, $this->_value, $this->_meta);
     }
 }

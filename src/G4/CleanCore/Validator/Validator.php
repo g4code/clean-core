@@ -42,11 +42,22 @@ class Validator implements ValidatorInterface
      */
     protected $_valid;
 
+    /**
+     * @var \G4\CleanCore\Error\Validation
+     */
+    private $_error;
+
 
     public function __construct()
     {
+        $this->_error  = new \G4\CleanCore\Error\Validation();
         $this->_params = array();
         $this->_valid  = true;
+    }
+
+    public function getErrorMessages()
+    {
+        return $this->_error->getMessages();
     }
 
     public function isValid()
@@ -74,21 +85,24 @@ class Validator implements ValidatorInterface
 
     protected function _validate()
     {
-        try {
+        $this->_iterateTroughMeta();
 
-            $this->_iterateTroughMeta();
-
-        } catch (\Exception $exception) {
-//             var_dump($exception);
-            //TODO: Drasko: handle exeption!
+        if ($this->_error->hasErrors()) {
             $this->_valid = false;
         }
     }
 
     private function _addToParams($paramName, $meta)
     {
-        $param = new Param($this->_request->getParam($paramName), $meta);
-        $this->_params[$paramName] = $param->getValue();
+        try {
+
+            $param = new Param($paramName, $this->_request->getParam($paramName), $meta);
+            $this->_params[$paramName] = $param->getValue();
+
+        } catch (\G4\CleanCore\Exception\Validation $exception) {
+
+            $this->_error->addException($exception);
+        }
     }
 
     private function _iterateTroughMeta()

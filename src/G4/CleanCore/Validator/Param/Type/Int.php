@@ -16,6 +16,11 @@ class Int extends TypeAbstract
         return $this;
     }
 
+    public function isValueNull()
+    {
+        return $this->_value === null;
+    }
+
     public function type()
     {
         return is_int($this->_value);

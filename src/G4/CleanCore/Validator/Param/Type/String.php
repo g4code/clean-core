@@ -12,8 +12,12 @@ class String extends TypeAbstract
         if (!$this->isValueNull()) {
             $this->_value = (string) $this->_value;
         }
-
         return $this;
+    }
+
+    public function isValueNull()
+    {
+        return $this->_value === null || $this->_value === '';
     }
 
     public function type()

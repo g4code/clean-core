@@ -4,7 +4,7 @@ namespace G4\CleanCore\Validator\Param\Type;
 
 use G4\CleanCore\Validator\Param\Type\TypeAbstract;
 
-class IntZeroPositive extends Int
+class IntZeroPositive extends \G4\CleanCore\Validator\Param\Type\Int
 {
     public function type()
     {

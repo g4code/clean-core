@@ -58,7 +58,9 @@ abstract class ServiceAbstract
     {
         $this->areParamsValid()
             ? $this->runUseCase()
-            : $this->_response->setHttpResponseCode(400);
+            : $this->_response
+                ->setHttpResponseCode(400)
+                ->setResponseMessage($this->_validator->getErrorMessages());
 
          return $this;
     }

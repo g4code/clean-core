@@ -98,7 +98,7 @@ abstract class TypeAbstract extends ParamAbstract implements TypeInterface
     public function required()
     {
         if ($this->isRequiredNotSet()) {
-            throw new \Exception("required code");
+            throw new \G4\CleanCore\Exception\Validation($this->_name, $this->_value, $this->_meta);
         }
 
         return $this;
