@@ -12,13 +12,13 @@ abstract class UseCaseAbstract implements UseCaseInterface
     /**
      * @var Request
      */
-    protected $_request;
+    private $_request;
 
     /**
      *
      * @var Response
      */
-    protected $_response;
+    private $_response;
 
     private $_formatter;
 
@@ -28,6 +28,9 @@ abstract class UseCaseAbstract implements UseCaseInterface
         $this->setResponse(new Response());
     }
 
+    /**
+     * @return \G4\CleanCore\Request\Request
+     */
     public function getRequest()
     {
         return $this->_request;
