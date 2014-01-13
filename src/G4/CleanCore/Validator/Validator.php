@@ -47,12 +47,18 @@ class Validator implements ValidatorInterface
      */
     private $_error;
 
+    /**
+     * @var array
+     */
+    private $_whitelistParams;
+
 
     public function __construct()
     {
-        $this->_error  = new \G4\CleanCore\Error\Validation();
-        $this->_params = array();
-        $this->_valid  = true;
+        $this->_error           = new \G4\CleanCore\Error\Validation();
+        $this->_params          = array();
+        $this->_valid           = true;
+        $this->_whitelistParams = array();
     }
 
     public function getErrorMessages()
@@ -63,7 +69,9 @@ class Validator implements ValidatorInterface
     public function isValid()
     {
         $this->_validate();
-        $this->_request->mergeParams($this->_params);
+        $this->_request
+            ->mergeParams($this->_params)
+            ->filterParams($this->_getWhitelistParams());
         return $this->_valid;
     }
 
@@ -77,9 +85,23 @@ class Validator implements ValidatorInterface
         return $this;
     }
 
+    /**
+     * @param \G4\CleanCore\Request\Request $request
+     * @return \G4\CleanCore\Validator\Validator
+     */
     public function setRequest(Request $request)
     {
         $this->_request = $request;
+        return $this;
+    }
+
+    /**
+     * @param array $whitelistParams
+     * @return \G4\CleanCore\Validator\Validator
+     */
+    public function setWhitelistParams(array $whitelistParams)
+    {
+        $this->_whitelistParams = $whitelistParams;
         return $this;
     }
 
@@ -103,6 +125,11 @@ class Validator implements ValidatorInterface
 
             $this->_error->addException($exception);
         }
+    }
+
+    private function _getWhitelistParams()
+    {
+        return array_merge($this->_whitelistParams, array_keys($this->_params));
     }
 
     private function _iterateTroughMeta()

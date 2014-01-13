@@ -29,6 +29,16 @@ class Request
     }
 
     /**
+     * @param array $whitelistParamKeys
+     * @return \G4\CleanCore\Request\Request
+     */
+    public function filterParams(array $whitelistParamKeys)
+    {
+        $this->_params = array_intersect_key($this->_params, array_flip($whitelistParamKeys));
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getMethod()
@@ -72,12 +82,22 @@ class Request
     }
 
     /**
+     * @param array|string $params
+     * @return \G4\CleanCore\Request\Request
+     */
+    public function mergeParams($params)
+    {
+        $this->_params = array_merge($this->_params, $params);
+        return $this;
+    }
+
+    /**
      * @param string $method
+     * @return \G4\CleanCore\Request\Request
      */
     public function setMethod($method)
     {
         $this->_method = $method;
-
         return $this;
     }
 
@@ -102,16 +122,6 @@ class Request
             ? ($this->_params = $params)
             : parse_str($params, $this->_params);
 
-        return $this;
-    }
-
-    /**
-     * @param array|string $params
-     * @return \G4\CleanCore\Request\Request
-     */
-    public function mergeParams($params)
-    {
-        $this->_params = array_merge($this->_params, $params);
         return $this;
     }
 

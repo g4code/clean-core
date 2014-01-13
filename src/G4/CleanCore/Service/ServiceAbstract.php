@@ -42,6 +42,7 @@ abstract class ServiceAbstract
         return $this->_validator
             ->setRequest($this->_request)
             ->setMeta($this->_meta)
+            ->setWhitelistParams($this->getWhitelistParams())
             ->isValid();
     }
 
@@ -52,6 +53,11 @@ abstract class ServiceAbstract
         }
 
         return $this->_response;
+    }
+
+    public function getWhitelistParams()
+    {
+        return array();
     }
 
     public function run()
