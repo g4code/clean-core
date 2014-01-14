@@ -54,6 +54,14 @@ abstract class UseCaseAbstract implements UseCaseInterface
     }
 
     /**
+     * @return \G4\CleanCore\Factory\UseCase
+     */
+    public function getUseCaseFactoryInstance()
+    {
+        return new \G4\CleanCore\Factory\UseCase();
+    }
+
+    /**
      * Factory method for use of a new UseCase class
      * Returns whole resource or just one part
      *
@@ -66,17 +74,10 @@ abstract class UseCaseAbstract implements UseCaseInterface
         if(null === $request) {
             $request = $this->getRequest();
         }
-
-        //TODO: Drasko: move to Factory class!!!
-        $useCase = new $useCaseName();
-        $useCase
+        return $this->getUseCaseFactoryInstance()
+            ->setUseCaseName($useCaseName)
             ->setRequest($request)
-            ->run();
-        $response = $useCase->getResponse();
-
-        return $resourcePart === null
-            ? $response->getResponseObject()
-            : $response->getResponseObjectPart($resourcePart);
+            ->getResource($resourcePart);
     }
 
     /**
