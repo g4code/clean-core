@@ -132,7 +132,16 @@ class Request
     public function setResourceName($resourceName)
     {
         $this->_resourceName = $resourceName;
+        return $this;
+    }
 
+    /**
+     * @param string $key
+     * @return \G4\CleanCore\Request\Request
+     */
+    public function unsetParam($key)
+    {
+        unset($this->_params[$key]);
         return $this;
     }
 }
