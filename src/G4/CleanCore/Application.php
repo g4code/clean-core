@@ -100,7 +100,6 @@ class Application
                 ->setResponse($this->getResponse())
                 ->manage();
         }
-
         return $this;
     }
 
