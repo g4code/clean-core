@@ -21,7 +21,8 @@ abstract class SliceAbstract extends CollectionAbstract
 
     public function isCollectionCountable()
     {
-        return $this->_getResourceCollection() instanceof \Countable;
+        return $this->_getResourceCollection() instanceof \Countable 
+            || is_array($this->_getResourceCollection());
     }
 
     public function isCollectionIterator()
