@@ -13,12 +13,12 @@ abstract class ServiceAbstract
     /**
      * @var \G4\CleanCore\Request\Request
      */
-    protected $_request;
+    private $_request;
 
     /**
      * @var \G4\CleanCore\Response\Response
      */
-    protected $_response;
+    private $_response;
 
     /**
      * @var \G4\CleanCore\UseCase\UseCaseAbstract
@@ -74,6 +74,11 @@ abstract class ServiceAbstract
     public function getResponse()
     {
         return $this->_response;
+    }
+
+    public function getRequeste()
+    {
+        return $this->_request;
     }
 
     public function runUseCase()
