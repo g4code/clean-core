@@ -28,20 +28,14 @@ abstract class ServiceAbstract
     /**
      * @var \G4\CleanCore\Validator\Validator
      */
-    protected $_validator;
+    private $_validator;
 
-
-    //TODO: Drasko: move to setters!
-    public function __construct()
-    {
-        $this->_validator = new Validator();
-    }
 
     public function areParamsValid()
     {
-        return $this->_validator
+        return $this->getValidator()
             ->setRequest($this->_request)
-            ->setMeta($this->_meta)
+            ->setMeta($this->getMeta())
             ->setWhitelistParams($this->getWhitelistParams())
             ->isValid();
     }
@@ -55,6 +49,24 @@ abstract class ServiceAbstract
         return $this->_response;
     }
 
+    public function getMeta()
+    {
+        return $this->_meta;
+    }
+
+    public function getValidator()
+    {
+        if (!$this->_validator instanceof \G4\CleanCore\Validator\Validator) {
+            $this->_validator = $this->getValidatorInstance();
+        }
+        return $this->_validator;
+    }
+
+    public function getValidatorInstance()
+    {
+        return new \G4\CleanCore\Validator\Validator();
+    }
+
     public function getWhitelistParams()
     {
         return array();
@@ -66,7 +78,7 @@ abstract class ServiceAbstract
             ? $this->runUseCase()
             : $this->_response
                 ->setHttpResponseCode(400)
-                ->setResponseMessage($this->_validator->getErrorMessages());
+                ->setResponseMessage($this->getValidator()->getErrorMessages());
 
          return $this;
     }
