@@ -7,7 +7,7 @@ use G4\CleanCore\Request\Request;
 use G4\CleanCore\Validator\Validator;
 use G4\CleanCore\UseCase\UseCaseAbstract;
 
-abstract class ServiceAbstract
+abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
 {
 
     /**
@@ -40,6 +40,11 @@ abstract class ServiceAbstract
             ->isValid();
     }
 
+    public function getFormatterInstance()
+    {
+        return $this->_getFormatterInstance();
+    }
+
     public function getFormattedResponse()
     {
         if (!method_exists($this->_useCase, 'getFormatterInstance')) {
@@ -52,6 +57,11 @@ abstract class ServiceAbstract
     public function getMeta()
     {
         return $this->_meta;
+    }
+
+    public function getUseCaseInstance()
+    {
+        return $this->_getUseCaseInstance();
     }
 
     public function getValidator()
@@ -95,7 +105,7 @@ abstract class ServiceAbstract
 
     public function runUseCase()
     {
-        $this->_useCase = $this->_getUseCaseInstance();
+        $this->_useCase = $this->getUseCaseInstance();
         $this->_useCase
             ->setRequest($this->_request)
             ->setResponse($this->_response)
@@ -126,8 +136,6 @@ abstract class ServiceAbstract
         return $this;
     }
 
-    abstract protected function _getUseCaseInstance();
-
     private function _getFormattedResource()
     {
         return $this->_response->hasResponseObject()
@@ -137,7 +145,7 @@ abstract class ServiceAbstract
 
     private function _formatterFactory()
     {
-        return $this->_getFormatterInstance()
+        return $this->getFormatterInstance()
             ->setResource($this->_response->getResponseObject())
             ->format();
     }
