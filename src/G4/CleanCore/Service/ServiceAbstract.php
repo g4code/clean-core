@@ -40,11 +40,6 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
             ->isValid();
     }
 
-    public function getFormatterInstance()
-    {
-        return $this->_getFormatterInstance();
-    }
-
     public function getFormattedResponse()
     {
         if (!method_exists($this->_useCase, 'getFormatterInstance')) {
@@ -52,16 +47,6 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
         }
 
         return $this->_response;
-    }
-
-    public function getMeta()
-    {
-        return $this->_meta;
-    }
-
-    public function getUseCaseInstance()
-    {
-        return $this->_getUseCaseInstance();
     }
 
     public function getValidator()
