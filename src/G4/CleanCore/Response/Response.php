@@ -1,18 +1,18 @@
 <?php
 namespace G4\CleanCore\Response;
 
-use G4\CleanCore\Response\Code;
-
 class Response
 {
     private $_applicationResponseCode;
+
+    private $_formattedResource;
 
     private $_httpResponseCode;
 
     //TODO: Drasko: Remove this!!!
     private $_responseMessage;
 
-    private $_responseObject;
+    private $_rawResource;
 
 
     public function __construct()
@@ -22,7 +22,7 @@ class Response
 
     public function addPartToResponseObject($key, $value)
     {
-        $this->_responseObject[$key] = $value;
+        $this->_rawResource[$key] = $value;
 
         return $this;
     }
@@ -30,6 +30,11 @@ class Response
     public function getApplicationResponseCode()
     {
         return $this->_applicationResponseCode;
+    }
+
+    public function getFormattedResource()
+    {
+        return $this->_formattedResource;
     }
 
     public function getHttpResponseCode()
@@ -44,7 +49,7 @@ class Response
 
     public function getHttpMessage()
     {
-        return Code::asMessage($this->getHttpResponseCode());
+        return \G4\CleanCore\Response\Code::asMessage($this->getHttpResponseCode());
     }
 
     public function getResponseMessage()
@@ -54,30 +59,36 @@ class Response
 
     public function getResponseObject()
     {
-        return $this->_responseObject;
+        return $this->_rawResource;
     }
 
     public function getResponseObjectPart($key)
     {
-        return isset($this->_responseObject[$key])
-            ? $this->_responseObject[$key]
+        return isset($this->_rawResource[$key])
+            ? $this->_rawResource[$key]
             : null;
     }
 
     public function hasResponseObject()
     {
-        return isset($this->_responseObject);
+        return isset($this->_rawResource);
     }
 
-    public function setApplicationResponseCode($value)
+    public function setApplicationResponseCode($applicationResponseCode)
     {
-        $this->_applicationResponseCode = $value;
+        $this->_applicationResponseCode = $applicationResponseCode;
         return $this;
     }
 
-    public function setHttpResponseCode($value)
+    public function setFormattedResource($formattedResource)
     {
-        $this->_httpResponseCode = $value;
+        $this->_formattedResource = $formattedResource;
+        return $this;
+    }
+
+    public function setHttpResponseCode($httpResponseCode)
+    {
+        $this->_httpResponseCode = $httpResponseCode;
         return $this;
     }
 
@@ -87,9 +98,9 @@ class Response
         return $this;
     }
 
-    public function setResponseObject($value)
+    public function setResponseObject($rawResource)
     {
-        $this->_responseObject = $value;
+        $this->_rawResource = $rawResource;
         return $this;
     }
 }
