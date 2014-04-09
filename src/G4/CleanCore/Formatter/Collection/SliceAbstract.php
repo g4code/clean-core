@@ -21,7 +21,7 @@ abstract class SliceAbstract extends CollectionAbstract
 
     public function isCollectionCountable()
     {
-        return $this->_getResourceCollection() instanceof \Countable 
+        return $this->_getResourceCollection() instanceof \Countable
             || is_array($this->_getResourceCollection());
     }
 
@@ -35,11 +35,11 @@ abstract class SliceAbstract extends CollectionAbstract
         $totalItems = $this->_getTotalItemsCount();
 
         return array(
-            'current_page_number' => $this->_resource['page'],
+            'current_page_number' => !empty($this->_resource) ? $this->_resource['page'] : null,
             'total_item_count'    => $totalItems,
-            'item_count_per_page' => $this->_resource['per_page'],
+            'item_count_per_page' => !empty($this->_resource) ? $this->_resource['per_page'] : null,
             'current_item_count'  => count($this->_data),
-            'page_count'          => ceil($totalItems / $this->_resource['per_page']),
+            'page_count'          => !empty($this->_resource) ? ceil($totalItems / $this->_resource['per_page']) : 0,
             'current_items'       => $this->_data
         );
     }
