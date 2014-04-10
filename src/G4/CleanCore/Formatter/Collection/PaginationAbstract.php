@@ -39,16 +39,18 @@ abstract class PaginationAbstract extends CollectionAbstract
 
     protected function _getResourcePage()
     {
-        return empty($this->_resource['page'])
+        $page = $this->getResource('page');
+        return empty($page)
             ? 1
-            : $this->_resource['page'];
+            : $page;
     }
 
     protected function _getResourcePerPage()
     {
-        return empty($this->_resource['per_page'])
+        $perPage = $this->getResource('per_page');
+        return empty($perPage)
             ? 1
-            : $this->_resource['per_page'];
+            : $perPage;
     }
 
     /**
@@ -69,6 +71,6 @@ abstract class PaginationAbstract extends CollectionAbstract
     {
         return is_object($this->_paginator)
             && $this->_paginator->getItemCount($this->_paginator) > 0
-            && $this->_resource['page'] <= count($this->_paginator);
+            && $this->getResource('page') <= count($this->_paginator);
     }
 }

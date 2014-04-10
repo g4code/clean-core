@@ -11,8 +11,18 @@ abstract class FormatterAbstract implements FormatterInterface
     /**
      * @var mixed
      */
-    protected $_resource;
+    private $_resource;
 
+    public function addToResource($part, $value)
+    {
+        $this->_resource[$part] = $value;
+        return $this;
+    }
+
+    public function doesPartExistsInResource($part)
+    {
+        return isset($this->_resource[$part]);
+    }
 
     /**
      * @param string $part
@@ -63,7 +73,7 @@ abstract class FormatterAbstract implements FormatterInterface
      */
     private function _getResourcePart($part)
     {
-        return isset($this->_resource[$part])
+        return $this->doesPartExistsInResource($part)
             ? $this->_resource[$part]
             : null;
     }

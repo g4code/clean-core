@@ -33,13 +33,14 @@ abstract class SliceAbstract extends CollectionAbstract
     protected function _getPaginatorResponse()
     {
         $totalItems = $this->_getTotalItemsCount();
+        $resource   = $this->getResource();
 
         return array(
-            'current_page_number' => !empty($this->_resource) ? $this->_resource['page'] : null,
+            'current_page_number' => !empty($resource) ? $this->getResource('page') : null,
             'total_item_count'    => $totalItems,
-            'item_count_per_page' => !empty($this->_resource) ? $this->_resource['per_page'] : null,
+            'item_count_per_page' => !empty($resource) ? $this->getResource('per_page') : null,
             'current_item_count'  => count($this->_data),
-            'page_count'          => !empty($this->_resource) ? ceil($totalItems / $this->_resource['per_page']) : 0,
+            'page_count'          => !empty($resource) ? ceil($totalItems / $this->getResource('per_page')) : 0,
             'current_items'       => $this->_data
         );
     }

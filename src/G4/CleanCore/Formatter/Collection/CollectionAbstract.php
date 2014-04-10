@@ -29,22 +29,22 @@ abstract class CollectionAbstract extends FormatterAbstract
 
     protected function _formatOneResource($oneResource)
     {
-        $this->_resource['resource'] = $oneResource;
-
+        $this->addToResource('resource', $oneResource);
         $this->_data[] = $this->_getOneFormattedResource();
     }
 
     protected function _getOneFormattedResource()
     {
         return $this->_getOneResourceFormatterInstance()
-            ->setResource($this->_resource)
+            ->setResource($this->getResource())
             ->format();
     }
 
     protected function _getResourceCollection()
     {
-        return empty($this->_resource['collection'])
+        $collection = $this->getResource('collection');
+        return empty($collection)
             ? array()
-            : $this->_resource['collection'];
+            : $collection;
     }
 }
