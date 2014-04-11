@@ -7,30 +7,52 @@ use G4\CleanCore\Formatter\FormatterAbstract;
 abstract class CollectionAbstract extends FormatterAbstract
 {
 
-    protected $_data;
+    private $_data;
 
 
     public function __construct()
     {
-        $this->_data = array();
+        $this->setData(array());
     }
 
     abstract protected function _getOneResourceFormatterInstance();
 
+    public function appendToData($value)
+    {
+        $this->_data[] = $value;
+        return $this;
+    }
 
     public function format()
     {
         foreach ($this->_getResourceCollection() as $resource) {
             $this->_formatOneResource($resource);
         }
+        return $this->getData();
+    }
 
+    public function getData()
+    {
         return $this->_data;
+    }
+
+    public function setData(array $data)
+    {
+        $this->_data = $data;
+        return $this;
+    }
+
+    public function setDataPart($key, $value)
+    {
+        $this->_data[$key] = $value;
+        return $this;
     }
 
     protected function _formatOneResource($oneResource)
     {
-        $this->addToResource('resource', $oneResource);
-        $this->_data[] = $this->_getOneFormattedResource();
+        $this
+            ->addToResource('resource', $oneResource)
+            ->appendToData($this->_getOneFormattedResource());
     }
 
     protected function _getOneFormattedResource()

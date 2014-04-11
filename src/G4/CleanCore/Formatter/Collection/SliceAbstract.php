@@ -30,18 +30,20 @@ abstract class SliceAbstract extends CollectionAbstract
         return $this->_getResourceCollection() instanceof \Iterator;
     }
 
+    //TODO: Drasko: this needs refactoring!
     protected function _getPaginatorResponse()
     {
         $totalItems = $this->_getTotalItemsCount();
         $resource   = $this->getResource();
+        $data       = $this->getData();
 
         return array(
             'current_page_number' => !empty($resource) ? $this->getResource('page') : null,
             'total_item_count'    => $totalItems,
             'item_count_per_page' => !empty($resource) ? $this->getResource('per_page') : null,
-            'current_item_count'  => count($this->_data),
+            'current_item_count'  => count($data),
             'page_count'          => !empty($resource) ? ceil($totalItems / $this->getResource('per_page')) : 0,
-            'current_items'       => $this->_data
+            'current_items'       => $data
         );
     }
 

@@ -33,7 +33,7 @@ abstract class PaginationAbstract extends CollectionAbstract
             'item_count_per_page' => $this->_paginator->getItemCountPerPage(),
             'current_item_count'  => $this->_paginator->getCurrentItemCount(),
             'page_count'          => count($this->_paginator),
-            'current_items'       => $this->_data
+            'current_items'       => $this->getData()
         );
     }
 
