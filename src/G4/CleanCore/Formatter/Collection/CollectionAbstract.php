@@ -2,9 +2,10 @@
 
 namespace G4\CleanCore\Formatter\Collection;
 
+use G4\CleanCore\Formatter\Collection\CollectionInterface;
 use G4\CleanCore\Formatter\FormatterAbstract;
 
-abstract class CollectionAbstract extends FormatterAbstract
+abstract class CollectionAbstract extends FormatterAbstract implements CollectionInterface
 {
 
     private $_data;
@@ -14,8 +15,6 @@ abstract class CollectionAbstract extends FormatterAbstract
     {
         $this->setData(array());
     }
-
-    abstract protected function _getOneResourceFormatterInstance();
 
     public function appendToData($value)
     {
@@ -57,7 +56,7 @@ abstract class CollectionAbstract extends FormatterAbstract
 
     protected function _getOneFormattedResource()
     {
-        return $this->_getOneResourceFormatterInstance()
+        return $this->getOneResourceFormatterInstance()
             ->setResource($this->getResource())
             ->format();
     }
