@@ -8,7 +8,7 @@ use G4\CleanCore\Paginator\Adapter\Iterator;
 abstract class PaginationAbstract extends CollectionAbstract
 {
 
-    protected $_paginator;
+    private $_paginator;
 
 
     public function format()
