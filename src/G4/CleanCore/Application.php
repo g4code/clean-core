@@ -41,6 +41,20 @@ class Application
      */
     private $_appNamespace;
 
+    public function __construct(\G4\Runner\Runner $appRunner = null)
+    {
+        if(null !== $appRunner && $appRunner instanceof \G4\Runner\Runner) {
+            $request = new Request();
+            $request
+                ->setMethod($appRunner->getApplicationMethod())
+                ->setResourceName($appRunner->getApplicationService())
+                ->setParams($appRunner->getApplicationParams());
+
+            $this
+                ->setRequest($request)
+                ->setAppNamespace($appRunner->getApplicationModule());
+        }
+    }
 
     /**
      * @return \G4\CleanCore\Bootstrap\Factory
@@ -121,6 +135,17 @@ class Application
     {
         $this->_request = $request;
         return $this;
+    }
+
+    /**
+     * @return \G4\CleanCore\Request\Request
+     */
+    public function getRequest()
+    {
+        if (!$this->_request instanceof Request) {
+            $this->_request = new Request();
+        }
+        return $this->_request;
     }
 
     /**
