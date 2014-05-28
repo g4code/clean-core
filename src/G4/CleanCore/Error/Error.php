@@ -15,7 +15,7 @@ class Error
     public function manage()
     {
         $this->_response
-            ->setResponseMessage($this->_exception->getMessage())
+            ->setResponseMessage($this->_getFormattedResponseMessage())
             ->setApplicationResponseCode($this->_exception->getCode())
             ->setHttpResponseCode($this->_getHttpCode());
     }
@@ -37,5 +37,16 @@ class Error
         return \G4\CleanCore\Response\Code::isValid($this->_exception->getCode())
             ? $this->_exception->getCode()
             : 500;
+    }
+
+    private function _getFormattedResponseMessage()
+    {
+        return array(
+            'code'    => $this->_exception->getCode(),
+            'message' => $this->_exception->getMessage(),
+            'file'    => $this->_exception->getFile(),
+            'line'    => $this->_exception->getLine(),
+            'trace'   => $this->_exception->getTrace()
+        );
     }
 }
