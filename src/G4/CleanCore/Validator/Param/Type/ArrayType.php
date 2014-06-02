@@ -37,7 +37,7 @@ class ArrayType extends TypeAbstract
         return $this;
     }
 
-    private function _isNotEmptyString()
+    protected function _isNotEmptyString()
     {
         return !$this->isValueNull()
             && is_string($this->_value)
