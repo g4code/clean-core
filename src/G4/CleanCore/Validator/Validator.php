@@ -10,6 +10,7 @@ class Validator implements ValidatorInterface
 {
 
     const TYPE_ARRAY             = 'ArrayType';
+    const TYPE_JSON              = 'Json';
     const TYPE_DATE              = 'Date';
     const TYPE_EMAIL             = 'Email';
     const TYPE_INT               = 'Int';
@@ -20,6 +21,7 @@ class Validator implements ValidatorInterface
     const TYPE_IP                = 'Ip';
     const TYPE_MD5               = 'Md5';
     const TYPE_STRING            = 'String';
+    const TYPE_STRING_VALID_JSON = 'StringValidJson';
     const TYPE_URL               = 'Url';
 
     /**
