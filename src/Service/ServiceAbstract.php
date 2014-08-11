@@ -78,7 +78,7 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
         return $this->_response;
     }
 
-    public function getRequeste()
+    public function getRequest()
     {
         return $this->_request;
     }
