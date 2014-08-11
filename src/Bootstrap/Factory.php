@@ -6,7 +6,6 @@ use G4\CleanCore\Request\Request;
 
 class Factory
 {
-
     private $_bootstrap;
 
     /**
@@ -20,7 +19,6 @@ class Factory
      * @var \G4\CleanCore\Request\Request
      */
     private $_request;
-
 
     public function initBootstrap()
     {
@@ -71,11 +69,9 @@ class Factory
         return class_exists($this->_fullBootstrapName);
     }
 
-
     private function _bootstrapFactory()
     {
         if ($this->_bootstrapExist()) {
-
             $bootstrapName    = $this->_fullBootstrapName;
             $this->bootstrap = new $bootstrapName();
             $this->bootstrap

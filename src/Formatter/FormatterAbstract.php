@@ -7,7 +7,6 @@ use G4\CleanCore\Request\Request;
 
 abstract class FormatterAbstract implements FormatterInterface
 {
-
     /**
      * @var mixed
      */

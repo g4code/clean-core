@@ -8,7 +8,6 @@ use G4\CleanCore\UseCase\UseCaseInterface;
 
 abstract class UseCaseAbstract implements UseCaseInterface
 {
-
     /**
      * @var Request
      */
@@ -21,7 +20,6 @@ abstract class UseCaseAbstract implements UseCaseInterface
     private $_response;
 
     private $_formatter;
-
 
     public function __construct()
     {
@@ -42,7 +40,6 @@ abstract class UseCaseAbstract implements UseCaseInterface
     public function getResponse()
     {
         if (method_exists($this, 'getFormatterInstance') && $this->_response->hasResponseObject()) {
-
             $formattedResource = $this->getFormatterInstance()
                 ->setResource($this->_response->getResponseObject())
                 ->format();

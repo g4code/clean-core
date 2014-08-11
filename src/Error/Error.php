@@ -3,14 +3,13 @@
 namespace G4\CleanCore\Error;
 
 use G4\CleanCore\Response\Response;
+use G4\Constants\Http;
 
 class Error
 {
-
     private $_exception;
 
     private $_response;
-
 
     public function manage()
     {
@@ -36,7 +35,7 @@ class Error
     {
         return \G4\CleanCore\Response\Code::isValid($this->_exception->getCode())
             ? $this->_exception->getCode()
-            : 500;
+            : Http::CODE_500;
     }
 
     private function _getFormattedResponseMessage()

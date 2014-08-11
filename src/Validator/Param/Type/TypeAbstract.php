@@ -7,7 +7,6 @@ use G4\CleanCore\Validator\Param\Type\TypeInterface;
 
 abstract class TypeAbstract extends ParamAbstract implements TypeInterface
 {
-
     const ARRAY_VALUE_SEPARATOR = '|';
 
     /**
@@ -18,7 +17,6 @@ abstract class TypeAbstract extends ParamAbstract implements TypeInterface
         if ($this->hasDefault() && $this->isValueNull()) {
             $this->_value = $this->getDefaultValues();
         }
-
         return $this;
     }
 
@@ -84,7 +82,7 @@ abstract class TypeAbstract extends ParamAbstract implements TypeInterface
     {
         return $this->_value === null
             || (empty($this->_value)
-                    && (is_array($this->_value) || is_string($this->_value)));
+            && (is_array($this->_value) || is_string($this->_value)));
     }
 
     public function hasDefault()
@@ -100,7 +98,6 @@ abstract class TypeAbstract extends ParamAbstract implements TypeInterface
         if ($this->isRequiredNotSet()) {
             throw new \G4\CleanCore\Exception\Validation($this->_name, $this->_value, $this->_meta);
         }
-
         return $this;
     }
 
@@ -112,7 +109,6 @@ abstract class TypeAbstract extends ParamAbstract implements TypeInterface
         if ($this->isValidMetaSet() && !$this->isInValidRange()) {
             $this->_value = null;
         }
-
         return $this;
     }
 }

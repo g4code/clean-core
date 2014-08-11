@@ -2,12 +2,10 @@
 
 namespace G4\CleanCore\Factory;
 
-use G4\CleanCore\Response\Response;
 use G4\CleanCore\Request\Request;
 
 class UseCase
 {
-
     /**
      * @var \G4\CleanCore\Request\Request
      */
@@ -27,7 +25,6 @@ class UseCase
      * @var string
      */
     private $_useCaseName;
-
 
     /**
      * @throws \Exception

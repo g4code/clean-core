@@ -6,7 +6,6 @@ use G4\CleanCore\Validator\Param\Type\TypeAbstract;
 
 class ArrayType extends TypeAbstract
 {
-
     public function cast()
     {
         if ($this->_isNotEmptyString()) {
@@ -30,10 +29,8 @@ class ArrayType extends TypeAbstract
     public function validValue()
     {
         if ($this->isValidMetaSet() && is_array($this->_value)) {
-
             $this->_value = array_intersect($this->getValidValues(), $this->_value);
         }
-
         return $this;
     }
 

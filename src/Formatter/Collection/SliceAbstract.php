@@ -3,11 +3,9 @@
 namespace G4\CleanCore\Formatter\Collection;
 
 use G4\CleanCore\Formatter\Collection\CollectionAbstract;
-use G4\CleanCore\Paginator\Adapter\Iterator;
 
 abstract class SliceAbstract extends CollectionAbstract
 {
-
     public function format()
     {
         if ($this->_hasItems()) {
@@ -15,7 +13,6 @@ abstract class SliceAbstract extends CollectionAbstract
                 $this->_formatOneResource($resource);
             }
         }
-
         return $this->_getPaginatorResponse();
     }
 
@@ -72,5 +69,4 @@ abstract class SliceAbstract extends CollectionAbstract
             ? $this->_getResourceCollection()->getTotalItemsCount()
             : $this->_getCollectionCount();
     }
-
 }

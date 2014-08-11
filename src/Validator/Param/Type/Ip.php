@@ -6,7 +6,6 @@ use G4\CleanCore\Validator\Param\Type\String;
 
 class Ip extends String
 {
-
     public function type()
     {
         return parent::type()

@@ -6,7 +6,6 @@ use \G4\CleanCore\Request\Request;
 
 class BootstrapAbstract
 {
-
     /**
      * @var \G4\CleanCore\Request\Request
      */

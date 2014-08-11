@@ -6,13 +6,11 @@ use G4\CleanCore\Validator\Param\Type\TypeAbstract;
 
 class Int extends TypeAbstract
 {
-
     public function cast()
     {
         if (!$this->isValueNull() && !$this->isValueEmptyString()) {
             $this->_value = (int) $this->_value;
         }
-
         return $this;
     }
 

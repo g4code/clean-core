@@ -14,7 +14,6 @@ class Response
 
     private $_rawResource;
 
-
     public function __construct()
     {
         $this->_httpResponseCode = null;
@@ -23,7 +22,6 @@ class Response
     public function addPartToResponseObject($key, $value)
     {
         $this->_rawResource[$key] = $value;
-
         return $this;
     }
 
@@ -40,10 +38,8 @@ class Response
     public function getHttpResponseCode()
     {
         if ($this->_httpResponseCode === null) {
-
             $this->_httpResponseCode = $this->hasResponseObject() ? 200 : 204;
         }
-
         return $this->_httpResponseCode;
     }
 

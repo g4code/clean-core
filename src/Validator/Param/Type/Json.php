@@ -20,5 +20,4 @@ class Json extends ArrayType
 
         return $this;
     }
-
 }

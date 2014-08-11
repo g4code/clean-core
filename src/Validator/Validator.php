@@ -8,7 +8,6 @@ use G4\CleanCore\Request\Request;
 
 class Validator implements ValidatorInterface
 {
-
     const TYPE_ARRAY             = 'ArrayType';
     const TYPE_JSON              = 'Json';
     const TYPE_DATE              = 'Date';

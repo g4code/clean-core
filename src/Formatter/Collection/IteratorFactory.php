@@ -4,7 +4,6 @@ namespace G4\CleanCore\Formatter\Collection;
 
 class IteratorFactory
 {
-
     private $_collection;
 
     public function __construct($collection)

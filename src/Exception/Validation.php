@@ -4,7 +4,6 @@ namespace G4\CleanCore\Exception;
 
 class Validation extends \Exception
 {
-
     protected $_meta;
 
     protected $_name;

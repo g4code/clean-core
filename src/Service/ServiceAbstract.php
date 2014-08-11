@@ -4,12 +4,9 @@ namespace G4\CleanCore\Service;
 
 use G4\CleanCore\Response\Response;
 use G4\CleanCore\Request\Request;
-use G4\CleanCore\Validator\Validator;
-use G4\CleanCore\UseCase\UseCaseAbstract;
 
 abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
 {
-
     /**
      * @var \G4\CleanCore\Request\Request
      */
@@ -30,7 +27,6 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
      */
     private $_validator;
 
-
     public function areParamsValid()
     {
         return $this->getValidator()
@@ -45,7 +41,6 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
         if (!method_exists($this->_useCase, 'getFormatterInstance')) {
             $this->_response->setResponseObject($this->_getFormattedResource());
         }
-
         return $this->_response;
     }
 

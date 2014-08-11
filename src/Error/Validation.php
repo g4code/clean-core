@@ -2,8 +2,6 @@
 
 namespace G4\CleanCore\Error;
 
-use G4\CleanCore\Response\Response;
-
 //TODO: Drasko: refactor this!
 class Validation
 {
@@ -12,13 +10,11 @@ class Validation
 
     private $_messages;
 
-
     public function __construct()
     {
         $this->_exceptions = array();
         $this->_messages   = array();
     }
-
 
     public function addException(\Exception $exception)
     {

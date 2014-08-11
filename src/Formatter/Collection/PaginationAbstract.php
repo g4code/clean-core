@@ -3,7 +3,6 @@
 namespace G4\CleanCore\Formatter\Collection;
 
 use G4\CleanCore\Formatter\Collection\CollectionAbstract;
-use G4\CleanCore\Paginator\Adapter\Iterator;
 
 abstract class PaginationAbstract extends CollectionAbstract
 {

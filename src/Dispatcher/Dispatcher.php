@@ -7,7 +7,6 @@ use G4\CleanCore\Request\Request;
 
 class Dispatcher
 {
-
     /**
      * @var string
      */
@@ -28,12 +27,10 @@ class Dispatcher
      */
     private $_appNamespace;
 
-
     public function __construct()
     {
         $this->_service = null;
     }
-
 
     /**
      * @return \G4\CleanCore\Service\ServiceAbstract
@@ -103,9 +100,9 @@ class Dispatcher
     private function _getServiceName()
     {
         return ucfirst(preg_replace(
-                "/\-(.)/e", "strtoupper('\\1')",
-                $this->_request->getResourceName()
-            ));
+            "/\-(.)/e", "strtoupper('\\1')",
+            $this->_request->getResourceName()
+        ));
     }
 
     /**
@@ -116,11 +113,9 @@ class Dispatcher
         return class_exists($this->_fullServiceName);
     }
 
-
     private function _serviceFactory()
     {
         if ($this->_serviceExist()) {
-
             $serviceName    = $this->_fullServiceName;
             $this->_service = new $serviceName();
         }

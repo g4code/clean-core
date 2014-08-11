@@ -6,7 +6,6 @@ use G4\CleanCore\Validator\Param\Type\TypeAbstract;
 
 class String extends TypeAbstract
 {
-
     public function cast()
     {
         if (!$this->isValueNull()) {

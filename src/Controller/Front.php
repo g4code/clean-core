@@ -8,7 +8,6 @@ use G4\CleanCore\Dispatcher\Dispatcher;
 
 class Front
 {
-
     private $_appNamespace;
 
     private $_dispatcher;
@@ -34,7 +33,6 @@ class Front
      * @var \G4\CleanCore\Response\Response
      */
     private $_response;
-
 
     public function getResponse()
     {

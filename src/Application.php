@@ -4,13 +4,11 @@ namespace G4\CleanCore;
 
 use G4\CleanCore\Controller\Front;
 use G4\CleanCore\Response\Response;
-use G4\CleanCore\Service\ServiceAbstract;
 use G4\CleanCore\Request\Request;
 use G4\CleanCore\Dispatcher\Dispatcher;
 
 class Application
 {
-
     /**
      * @var \G4\CleanCore\Bootstrap\Factory
      */
@@ -40,21 +38,6 @@ class Application
      * @var string
      */
     private $_appNamespace;
-
-    public function __construct(\G4\Runner\Runner $appRunner = null)
-    {
-        if(null !== $appRunner && $appRunner instanceof \G4\Runner\Runner) {
-            $request = new Request();
-            $request
-                ->setMethod($appRunner->getApplicationMethod())
-                ->setResourceName($appRunner->getApplicationService())
-                ->setParams($appRunner->getApplicationParams());
-
-            $this
-                ->setRequest($request)
-                ->setAppNamespace($appRunner->getApplicationModule());
-        }
-    }
 
     /**
      * @return \G4\CleanCore\Bootstrap\Factory
@@ -106,9 +89,7 @@ class Application
             $this
                 ->_initBootstrap()
                 ->_runFrontController();
-
         } catch(\Exception $exception) {
-
             $this->getError()
                 ->setException($exception)
                 ->setResponse($this->getResponse())

@@ -22,7 +22,6 @@ class Request
      */
     private $_resourceName;
 
-
     public function __construct()
     {
         $this->_params = array();

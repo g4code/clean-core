@@ -7,9 +7,7 @@ use G4\CleanCore\Formatter\FormatterAbstract;
 
 abstract class CollectionAbstract extends FormatterAbstract implements CollectionInterface
 {
-
     private $_data;
-
 
     public function __construct()
     {
