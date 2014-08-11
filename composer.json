@@ -15,7 +15,7 @@
     },
     {
         "name": "Dejan Samardzija",
-        "email": "samardzijadejan@gmail.com"
+        "email": "samardzija.dejan@gmail.com"
     },
     {
         "name": "Ivan Krickovic",
@@ -23,13 +23,14 @@
     }
   ],
   "autoload": {
-    "psr-0": {"G4\\CleanCore\\": "src/"}
+    "psr-4": {"G4\\CleanCore\\": "src/"}
   },
   "require-dev": {
     "phpunit/phpunit": "3.7.*"
   },
   "require": {
-    "php"                         : ">=5.3.3",
+    "php"                         : ">=5.4",
+    "g4/constants"                : "0.1.3",
     "zendframework/zend-paginator": "2.*"
   }
 }
