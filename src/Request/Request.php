@@ -22,6 +22,11 @@ class Request
      */
     private $_resourceName;
 
+    /**
+     * @var array
+     */
+    private $anonymizationRules;
+
     public function __construct()
     {
         $this->_params = array();
@@ -62,6 +67,35 @@ class Request
     public function getParams()
     {
         return $this->_params;
+    }
+
+    public function setAnonymizationRules($param, $rule)
+    {
+        if(isset($this->anonymizationRules[$param])) {
+            throw new \Exception("Rule for '{$param}' already exists.");
+        }
+
+        $this->anonymizationRules[$param] = $rule;
+        return $this;
+    }
+
+    public function getParamsAnonymized()
+    {
+        $cleanParams = $this->getParams();
+
+        if(is_array($this->anonymizationRules)) {
+            foreach ($this->anonymizationRules as $key => $rule) {
+                if($rule === null) {
+                    unset($cleanParams[$key]);
+                } else {
+                    $cleanParams[$key] = is_callable($rule)
+                        ? $rule($cleanParams[$key])
+                        : $rule;
+                }
+            }
+        }
+
+        return $cleanParams;
     }
 
     /**
