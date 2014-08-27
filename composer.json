@@ -30,7 +30,7 @@
   },
   "require": {
     "php"                         : ">=5.4",
-    "g4/constants"                : "0.1.3",
+    "g4/constants"                : "*",
     "zendframework/zend-paginator": "2.*"
   }
 }
