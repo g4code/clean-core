@@ -85,12 +85,14 @@ class Request
 
         if(is_array($this->anonymizationRules)) {
             foreach ($this->anonymizationRules as $key => $rule) {
-                if($rule === null) {
-                    unset($cleanParams[$key]);
-                } else {
-                    $cleanParams[$key] = is_callable($rule)
-                        ? $rule($cleanParams[$key])
-                        : $rule;
+                if(isset($cleanParams[$key])) {
+                    if($rule === null) {
+                        unset($cleanParams[$key]);
+                    } else {
+                        $cleanParams[$key] = is_callable($rule)
+                            ? $rule($cleanParams[$key])
+                            : $rule;
+                    }
                 }
             }
         }
