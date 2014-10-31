@@ -4,7 +4,9 @@ clean-core
 > clean-core - [php](http://php.net) library
 
 ## Install
-
+```sh
+composer require g4/clean-core
+```
 ## Usage
 
 ## Development
