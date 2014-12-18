@@ -12,42 +12,51 @@ class Application
     /**
      * @var \G4\CleanCore\Bootstrap\Factory
      */
-    private $_bootstrapFactory;
+    private $bootstrapFactory;
 
     /**
      * @var \G4\CleanCore\Error\Error
      */
-    private $_error;
+    private $error;
 
     /**
      * @var \G4\CleanCore\Controller\Front
      */
-    private $_frontController;
+    private $frontController;
 
     /**
      * @var Request
      */
-    private $_request;
+    private $request;
 
     /**
      * @var Response
      */
-    private $_response;
+    private $response;
 
     /**
      * @var string
      */
-    private $_appNamespace;
+    private $appNamespace;
+
+
+    /**
+     * @return string
+     */
+    public function getAppNamespace()
+    {
+        return $this->appNamespace;
+    }
 
     /**
      * @return \G4\CleanCore\Bootstrap\Factory
      */
     public function getBootstrapFactory()
     {
-        if (!$this->_bootstrapFactory instanceof \G4\CleanCore\Bootstrap\Factory) {
-            $this->_bootstrapFactory = new \G4\CleanCore\Bootstrap\Factory();
+        if (!$this->bootstrapFactory instanceof \G4\CleanCore\Bootstrap\Factory) {
+            $this->bootstrapFactory = new \G4\CleanCore\Bootstrap\Factory();
         }
-        return $this->_bootstrapFactory;
+        return $this->bootstrapFactory;
     }
 
     /**
@@ -55,10 +64,10 @@ class Application
      */
     public function getError()
     {
-        if (!$this->_error instanceof \G4\CleanCore\Error\Error) {
-            $this->_error = new \G4\CleanCore\Error\Error();
+        if (!$this->error instanceof \G4\CleanCore\Error\Error) {
+            $this->error = new \G4\CleanCore\Error\Error();
         }
-        return $this->_error;
+        return $this->error;
     }
 
     /**
@@ -66,10 +75,10 @@ class Application
      */
     public function getFrontController()
     {
-        if (!$this->_frontController instanceof Front) {
-            $this->_frontController = new Front();
+        if (!$this->frontController instanceof Front) {
+            $this->frontController = new Front();
         }
-        return $this->_frontController;
+        return $this->frontController;
     }
 
     /**
@@ -77,18 +86,29 @@ class Application
      */
     public function getResponse()
     {
-        if (!$this->_response instanceof Response) {
-            $this->_response = new Response();
+        if (!$this->response instanceof Response) {
+            $this->response = new Response();
         }
-        return $this->_response;
+        return $this->response;
+    }
+
+    /**
+     * @return \G4\CleanCore\Request\Request
+     */
+    public function getRequest()
+    {
+        if (!$this->request instanceof Request) {
+            $this->request = new Request();
+        }
+        return $this->request;
     }
 
     public function run()
     {
         try {
             $this
-                ->_initBootstrap()
-                ->_runFrontController();
+                ->initBootstrap()
+                ->runFrontController();
         } catch(\Exception $exception) {
             $this->getError()
                 ->setException($exception)
@@ -104,7 +124,7 @@ class Application
      */
     public function setAppNamespace($appNamespace)
     {
-        $this->_appNamespace = $appNamespace;
+        $this->appNamespace = $appNamespace;
         return $this;
     }
 
@@ -114,29 +134,18 @@ class Application
      */
     public function setRequest(Request $request)
     {
-        $this->_request = $request;
+        $this->request = $request;
         return $this;
-    }
-
-    /**
-     * @return \G4\CleanCore\Request\Request
-     */
-    public function getRequest()
-    {
-        if (!$this->_request instanceof Request) {
-            $this->_request = new Request();
-        }
-        return $this->_request;
     }
 
     /**
      * @return \G4\CleanCore\Application
      */
-    private function _initBootstrap()
+    private function initBootstrap()
     {
         $this->getBootstrapFactory()
-            ->setAppNamespace($this->_appNamespace)
-            ->setRequest($this->_request)
+            ->setAppNamespace($this->appNamespace)
+            ->setRequest($this->request)
             ->initBootstrap();
         return $this;
     }
@@ -144,16 +153,16 @@ class Application
     /**
      * @return \G4\CleanCore\Application
      */
-    private function _runFrontController()
+    private function runFrontController()
     {
         $this->getFrontController()
-            ->setAppNamespace($this->_appNamespace)
+            ->setAppNamespace($this->appNamespace)
             ->setDispatcher(new Dispatcher())
-            ->setRequest($this->_request)
+            ->setRequest($this->request)
             ->setResponse($this->getResponse())
             ->run();
         //TODO: Drasko: remove this after UseCase Response dependency refactoring!
-        $this->_response = $this->getFrontController()->getResponse();
+        $this->response = $this->getFrontController()->getResponse();
         return $this;
     }
 }
