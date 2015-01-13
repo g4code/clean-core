@@ -10,7 +10,7 @@ class Json extends ArrayType
             $this->_value = json_decode($this->_value, true);
         }
 
-        if(json_last_error() !== JSON_ERROR_NONE) {
+        if($this->_isNotEmptyString() && json_last_error() !== JSON_ERROR_NONE) {
             throw new \G4\CleanCore\Exception\Validation($this->_name, $this->_value, $this->_meta);
         }
 
