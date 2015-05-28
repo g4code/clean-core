@@ -43,6 +43,17 @@ abstract class FormatterAbstract implements FormatterInterface
     }
 
     /**
+     * @param \G4\CleanCore\Formatter\FormatterAbstract $formatter
+     * @param mixed $resource
+     */
+    public function reference(\G4\CleanCore\Formatter\FormatterAbstract $formatter, $resource)
+    {
+        return $formatter
+            ->setResource($resource)
+            ->format();
+    }
+
+    /**
      * @param mixed $response
      * @return FormatterAbstract
      */
