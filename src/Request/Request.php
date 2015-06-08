@@ -12,6 +12,11 @@ class Request
     private $_method;
 
     /**
+     * @var string
+     */
+    private $_module;
+
+    /**
      * @var array
      */
     private $_params;
@@ -48,6 +53,14 @@ class Request
     public function getMethod()
     {
         return $this->_method;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModule()
+    {
+        return $this->_module;
     }
 
     /**
@@ -133,6 +146,16 @@ class Request
     public function setMethod($method)
     {
         $this->_method = $method;
+        return $this;
+    }
+
+    /**
+     * @param string $module
+     * @return \G4\CleanCore\Request\Request
+     */
+    public function setModule($module)
+    {
+        $this->_module = $module;
         return $this;
     }
 
