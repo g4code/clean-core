@@ -4,6 +4,12 @@ namespace G4\CleanCore\Request;
 
 class Request
 {
+
+    /**
+     * @var bool
+     */
+    private $ajaxCall;
+
     /**
      * Valid methods
      * index, get, post, put, delete
@@ -129,6 +135,11 @@ class Request
         return isset($this->_params[$key]);
     }
 
+    public function isAjax()
+    {
+        return (bool) $this->ajaxCall;
+    }
+
     /**
      * @param array|string $params
      * @return \G4\CleanCore\Request\Request
@@ -136,6 +147,12 @@ class Request
     public function mergeParams($params)
     {
         $this->_params = array_merge($this->_params, $params);
+        return $this;
+    }
+
+    public function setAjaxCall($ajaxCall)
+    {
+        $this->ajaxCall = $ajaxCall;
         return $this;
     }
 
