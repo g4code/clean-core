@@ -27,6 +27,18 @@ abstract class UseCaseAbstract implements UseCaseInterface
     }
 
     /**
+     * @param string $useCaseName
+     */
+    public function forward($useCaseName)
+    {
+        $this->getResponse()->setResponseObject(
+            $this->getUseCaseFactoryInstance()
+            ->setUseCaseName($useCaseName)
+            ->setRequest($this->getRequest())
+            ->getResource());
+    }
+
+    /**
      * @return \G4\CleanCore\Request\Request
      */
     public function getRequest()
