@@ -2,6 +2,8 @@
 
 namespace G4\CleanCore\Validator\Param;
 
+use G4\CleanCore\Request\Request;
+
 abstract class ParamAbstract implements ParamInterface
 {
     /**
@@ -14,16 +16,24 @@ abstract class ParamAbstract implements ParamInterface
      *
      * @var array
      */
-    protected $_meta;
+    protected $_meta; //TODO: Drasko: should be private!
 
-    protected $_name;
+    protected $_name; //TODO: Drasko: should be private!
 
-    protected $_value;
+    protected $_value; //TODO: Drasko: should be private!
 
-    public function __construct($name, $value, $meta)
+    private $request;
+
+    public function __construct($name, Request $request, $meta)
     {
-        $this->_name  = $name;
-        $this->_value = $value;
-        $this->_meta  = $meta;
+        $this->_name   = $name;
+        $this->request = $request;
+        $this->_value  = $request->getParam($name);
+        $this->_meta   = $meta;
+    }
+
+    public function getRequest()
+    {
+        return $this->request;
     }
 }

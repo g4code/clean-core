@@ -26,54 +26,54 @@ class Validator implements ValidatorInterface
     /**
      * @var array
      */
-    protected $_meta;
+    private $meta;
 
     /**
      * @var array
      */
-    protected $_params;
+    private $params;
 
     /**
      * @var Request
      */
-    protected $_request;
+    private $request;
 
     /**
      * @var bool
      */
-    protected $_valid;
+    private $valid;
 
     /**
      * @var \G4\CleanCore\Error\Validation
      */
-    private $_error;
+    private $error;
 
     /**
      * @var array
      */
-    private $_whitelistParams;
+    private $whitelistParams;
 
 
     public function __construct()
     {
-        $this->_error           = new \G4\CleanCore\Error\Validation();
-        $this->_params          = array();
-        $this->_valid           = true;
-        $this->_whitelistParams = array();
+        $this->error           = new \G4\CleanCore\Error\Validation();
+        $this->params          = [];
+        $this->valid           = true;
+        $this->whitelistParams = [];
     }
 
     public function getErrorMessages()
     {
-        return $this->_error->getMessages();
+        return $this->error->getMessages();
     }
 
     public function isValid()
     {
-        $this->_validate();
-        $this->_request
-            ->mergeParams($this->_params)
-            ->filterParams($this->_getWhitelistParams());
-        return $this->_valid;
+        $this->validate();
+        $this->request
+            ->mergeParams($this->params)
+            ->filterParams($this->getWhitelistParams());
+        return $this->valid;
     }
 
     /**
@@ -82,7 +82,7 @@ class Validator implements ValidatorInterface
      */
     public function setMeta(array $meta)
     {
-        $this->_meta = $meta;
+        $this->meta = $meta;
         return $this;
     }
 
@@ -92,7 +92,7 @@ class Validator implements ValidatorInterface
      */
     public function setRequest(Request $request)
     {
-        $this->_request = $request;
+        $this->request = $request;
         return $this;
     }
 
@@ -102,41 +102,41 @@ class Validator implements ValidatorInterface
      */
     public function setWhitelistParams(array $whitelistParams)
     {
-        $this->_whitelistParams = $whitelistParams;
+        $this->whitelistParams = $whitelistParams;
         return $this;
     }
 
-    protected function _validate()
+    private function validate()
     {
-        $this->_iterateTroughMeta();
+        $this->iterateTroughMeta();
 
-        if ($this->_error->hasErrors()) {
-            $this->_valid = false;
+        if ($this->error->hasErrors()) {
+            $this->valid = false;
         }
     }
 
-    private function _addToParams($paramName, $meta)
+    private function addToParams($paramName, $meta)
     {
         try {
 
-            $param = new Param($paramName, $this->_request->getParam($paramName), $meta);
-            $this->_params[$paramName] = $param->getValue();
+            $param = new Param($paramName, $this->request, $meta);
+            $this->params[$paramName] = $param->getValue();
 
         } catch (\G4\CleanCore\Exception\Validation $exception) {
 
-            $this->_error->addException($exception);
+            $this->error->addException($exception);
         }
     }
 
-    private function _getWhitelistParams()
+    private function getWhitelistParams()
     {
-        return array_merge($this->_whitelistParams, array_keys($this->_params));
+        return array_merge($this->whitelistParams, array_keys($this->params));
     }
 
-    private function _iterateTroughMeta()
+    private function iterateTroughMeta()
     {
-        foreach ($this->_meta as $paramName => $meta) {
-            $this->_addToParams($paramName, $meta);
+        foreach ($this->meta as $paramName => $meta) {
+            $this->addToParams($paramName, $meta);
         }
     }
 }

@@ -8,15 +8,14 @@ class Param extends ParamAbstract
 {
     public function getValue()
     {
-        return $this->_factory()->getValue();
+        return $this->factory()->getValue();
     }
 
-    private function _factory()
+    private function factory()
     {
         $className = class_exists($this->_meta['type'])
             ? $this->_meta['type']
             : 'G4\CleanCore\Validator\Param\Type\\' . $this->_meta['type'];
-
-        return new $className($this->_name, $this->_value, $this->_meta);
+        return new $className($this->_name, $this->getRequest(), $this->_meta);
     }
 }
