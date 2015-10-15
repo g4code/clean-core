@@ -46,8 +46,8 @@ class Dispatcher
     public function isDispatchable()
     {
         $this
-            ->_constructFullServiceName()
-            ->_serviceFactory();
+            ->constructFullServiceName()
+            ->serviceFactory();
 
         return $this->_service instanceof ServiceAbstract;
     }
@@ -75,13 +75,13 @@ class Dispatcher
     /**
      * @return \G4\CleanCore\Dispatcher\Dispatcher
      */
-    private function _constructFullServiceName()
+    private function constructFullServiceName()
     {
         $this->_fullServiceName = join('\\', array(
             $this->_appNamespace,
             'Service',
-            $this->_getServiceName(),
-            $this->_getClassName()
+            $this->getServiceName(),
+            $this->getClassName()
         ));
         return $this;
     }
@@ -89,7 +89,7 @@ class Dispatcher
     /**
      * @return string
      */
-    private function _getClassName()
+    private function getClassName()
     {
         return ucfirst($this->_request->getMethod());
     }
@@ -97,25 +97,29 @@ class Dispatcher
     /**
      * @return string
      */
-    private function _getServiceName()
+    private function getServiceName()
     {
-        return ucfirst(preg_replace(
-            "/\-(.)/e", "strtoupper('\\1')",
-            $this->_request->getResourceName()
-        ));
+        return ucfirst(
+            preg_replace_callback('/(^|_)([a-z])/',
+                function($matches) {
+                    return strtoupper($matches[2]);
+                },
+                $this->_request->getResourceName()
+            )
+        );
     }
 
     /**
      * @return bool
      */
-    private function _serviceExist()
+    private function serviceExist()
     {
         return class_exists($this->_fullServiceName);
     }
 
-    private function _serviceFactory()
+    private function serviceFactory()
     {
-        if ($this->_serviceExist()) {
+        if ($this->serviceExist()) {
             $serviceName    = $this->_fullServiceName;
             $this->_service = new $serviceName();
         }
