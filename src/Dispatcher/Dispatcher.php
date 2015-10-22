@@ -99,14 +99,7 @@ class Dispatcher
      */
     private function getServiceName()
     {
-        return ucfirst(
-            preg_replace_callback('/(^|_)([a-z])/',
-                function($matches) {
-                    return strtoupper($matches[2]);
-                },
-                $this->_request->getResourceName()
-            )
-        );
+        return str_replace('-', '', ucwords($this->_request->getResourceName(), '-'));
     }
 
     /**
