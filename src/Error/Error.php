@@ -16,7 +16,13 @@ class Error
         $this->_response
             ->setResponseMessage($this->_getFormattedResponseMessage())
             ->setApplicationResponseCode($this->_exception->getCode())
-            ->setHttpResponseCode($this->_getHttpCode());
+            ->setHttpResponseCode($this->_getHttpCode())
+            ->setResponseObject([
+                'error' => [
+                    'code'    => $this->_exception->getCode(),
+                    'message' => $this->_exception->getMessage(),
+                ]
+            ]);
     }
 
     public function setException(\Exception $exception)
