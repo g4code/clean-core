@@ -56,7 +56,14 @@ abstract class UseCaseGatewayAbstract extends UseCaseAbstract implements UseCase
     private function throwError()
     {
         $this->getResponse()->addPartToResponseObject(Format::FORMAT, Format::JSON);
-        throw new \Exception(null, $this->getGateway()->getResponseCode());
+
+        $resource = $this->getGateway()->getResource();
+
+        $message = isset($resource['error']) && isset($resource['error']['message'])
+            ? $resource['error']['message']
+            : null;
+
+        throw new \Exception($message, $this->getGateway()->getResponseCode());
     }
 
     private function getResponseCodeFromGatway()
