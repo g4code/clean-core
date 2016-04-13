@@ -11,6 +11,11 @@ class Request
     private $ajaxCall;
 
     /**
+     * @var array
+     */
+    private $anonymizationRules;
+
+    /**
      * Valid methods
      * index, get, post, put, delete
      * @var string
@@ -28,6 +33,11 @@ class Request
     private $_params;
 
     /**
+     * @var string
+     */
+    private $rawInput;
+
+    /**
      * Resource name
      * @var string
      */
@@ -36,7 +46,7 @@ class Request
     /**
      * @var array
      */
-    private $anonymizationRules;
+    private $serverVariables;
 
     public function __construct()
     {
@@ -86,6 +96,25 @@ class Request
     public function getParams()
     {
         return $this->_params;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRawInput()
+    {
+        return $this->rawInput;
+    }
+
+    /**
+     * @param string $key
+     * @return NULL|string
+     */
+    public function getServerVariable($key)
+    {
+        return is_array($this->serverVariables) && isset($this->serverVariables[$key])
+            ? $this->serverVariables[$key]
+            : null;
     }
 
     public function setAnonymizationRules($param, $rule)
@@ -201,12 +230,32 @@ class Request
     }
 
     /**
+     * @param string $value
+     * @return \G4\CleanCore\Request\Request
+     */
+    public function setRawInput($value)
+    {
+        $this->rawInput = $value;
+        return $this;
+    }
+
+    /**
      * @param string $resource
      * @return \G4\CleanCore\Request\Request
      */
     public function setResourceName($resourceName)
     {
         $this->_resourceName = $resourceName;
+        return $this;
+    }
+
+    /**
+     * @param array $value
+     * @return \G4\CleanCore\Request\Request
+     */
+    public function setServerVariables($value)
+    {
+        $this->serverVariables = $value;
         return $this;
     }
 
