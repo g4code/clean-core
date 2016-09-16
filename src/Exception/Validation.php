@@ -21,4 +21,9 @@ class Validation extends \Exception
     {
         return $this->_name;
     }
+    
+    public function getValue()
+    {
+        return $this->_value;
+    }
 }

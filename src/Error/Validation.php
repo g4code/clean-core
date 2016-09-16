@@ -5,7 +5,10 @@ namespace G4\CleanCore\Error;
 //TODO: Drasko: refactor this!
 class Validation
 {
-
+    
+    /**
+     * @var \G4\CleanCore\Exception\Validation[]
+     */
     private $_exceptions;
 
     private $_messages;
@@ -15,8 +18,8 @@ class Validation
         $this->_exceptions = array();
         $this->_messages   = array();
     }
-
-    public function addException(\Exception $exception)
+    
+    public function addException(\G4\CleanCore\Exception\Validation $exception)
     {
         $this->_exceptions[] = $exception;
         return $this;
@@ -35,10 +38,12 @@ class Validation
     {
         return !empty($this->_exceptions);
     }
-
-    private function _addMessage(\Exception $exception)
+    
+    private function _addMessage(\G4\CleanCore\Exception\Validation $exception)
     {
-        $this->_messages[] = $exception->getName();
+        $this->_messages[] = [
+            $exception->getName() =>  $exception->getValue()
+        ];
     }
 
     private function _iterateTroughExceptions()
