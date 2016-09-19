@@ -100,9 +100,9 @@ class Dispatcher
     private function getServiceName()
     {
         return ucfirst(
-            preg_replace_callback('/(^|_)([a-z])/',
+            preg_replace_callback('/-([a-z])/',
                 function($matches) {
-                    return strtoupper($matches[2]);
+                    return strtoupper($matches[1]);
                 },
                 $this->_request->getResourceName()
             )
