@@ -2,11 +2,13 @@
 
 namespace G4\CleanCore\Service;
 
+use G4\CleanCore\Meta\Meta;
 use G4\CleanCore\Response\Response;
 use G4\CleanCore\Request\Request;
 
 abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
 {
+
     /**
      * @var \G4\CleanCore\Request\Request
      */
