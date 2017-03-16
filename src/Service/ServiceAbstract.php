@@ -20,12 +20,12 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
     /**
      * @var \G4\CleanCore\UseCase\UseCaseAbstract
      */
-    private $_useCase;
+    private $useCase;
 
     /**
      * @var \G4\CleanCore\Validator\Validator
      */
-    private $_validator;
+    private $validator;
 
     public function areParamsValid()
     {
@@ -38,7 +38,7 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
 
     public function getFormattedResponse()
     {
-        if (!method_exists($this->_useCase, 'getFormatterInstance')) {
+        if (!method_exists($this->useCase, 'getFormatterInstance')) {
             $this->response->setResponseObject($this->_getFormattedResource());
         }
         return $this->response;
@@ -46,10 +46,10 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
 
     public function getValidator()
     {
-        if (!$this->_validator instanceof \G4\CleanCore\Validator\Validator) {
-            $this->_validator = $this->getValidatorInstance();
+        if (!$this->validator instanceof \G4\CleanCore\Validator\Validator) {
+            $this->validator = $this->getValidatorInstance();
         }
-        return $this->_validator;
+        return $this->validator;
     }
 
     public function getValidatorInstance()
@@ -67,10 +67,10 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
         $this->areParamsValid()
             ? $this->runUseCase()
             : $this->response
-                ->setHttpResponseCode(400)
-                ->setResponseMessage($this->getValidator()->getErrorMessages());
+            ->setHttpResponseCode(400)
+            ->setResponseMessage($this->getValidator()->getErrorMessages());
 
-         return $this;
+        return $this;
     }
 
     public function getResponse()
@@ -85,13 +85,13 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
 
     public function runUseCase()
     {
-        $this->_useCase = $this->getUseCaseInstance();
-        $this->_useCase
+        $this->useCase = $this->getUseCaseInstance();
+        $this->useCase
             ->setRequest($this->request)
             ->setResponse($this->response)
             ->run();
 
-        $this->response = $this->_useCase->getResponse();
+        $this->response = $this->useCase->getResponse();
 
         return $this;
     }
