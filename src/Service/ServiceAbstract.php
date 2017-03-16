@@ -10,12 +10,12 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
     /**
      * @var \G4\CleanCore\Request\Request
      */
-    private $_request;
+    private $request;
 
     /**
      * @var \G4\CleanCore\Response\Response
      */
-    private $_response;
+    private $response;
 
     /**
      * @var \G4\CleanCore\UseCase\UseCaseAbstract
@@ -30,7 +30,7 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
     public function areParamsValid()
     {
         return $this->getValidator()
-            ->setRequest($this->_request)
+            ->setRequest($this->request)
             ->setMeta($this->getMeta())
             ->setWhitelistParams($this->getWhitelistParams())
             ->isValid();
@@ -39,9 +39,9 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
     public function getFormattedResponse()
     {
         if (!method_exists($this->_useCase, 'getFormatterInstance')) {
-            $this->_response->setResponseObject($this->_getFormattedResource());
+            $this->response->setResponseObject($this->_getFormattedResource());
         }
-        return $this->_response;
+        return $this->response;
     }
 
     public function getValidator()
@@ -66,7 +66,7 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
     {
         $this->areParamsValid()
             ? $this->runUseCase()
-            : $this->_response
+            : $this->response
                 ->setHttpResponseCode(400)
                 ->setResponseMessage($this->getValidator()->getErrorMessages());
 
@@ -75,23 +75,23 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
 
     public function getResponse()
     {
-        return $this->_response;
+        return $this->response;
     }
 
     public function getRequest()
     {
-        return $this->_request;
+        return $this->request;
     }
 
     public function runUseCase()
     {
         $this->_useCase = $this->getUseCaseInstance();
         $this->_useCase
-            ->setRequest($this->_request)
-            ->setResponse($this->_response)
+            ->setRequest($this->request)
+            ->setResponse($this->response)
             ->run();
 
-        $this->_response = $this->_useCase->getResponse();
+        $this->response = $this->_useCase->getResponse();
 
         return $this;
     }
@@ -102,7 +102,7 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
      */
     public function setRequest(Request $request)
     {
-        $this->_request = $request;
+        $this->request = $request;
         return $this;
     }
 
@@ -112,13 +112,13 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
      */
     public function setResponse(Response $response)
     {
-        $this->_response = $response;
+        $this->response = $response;
         return $this;
     }
 
     private function _getFormattedResource()
     {
-        return $this->_response->hasResponseObject()
+        return $this->response->hasResponseObject()
             ? $this->_formatterFactory()
             : null;
     }
@@ -126,7 +126,7 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
     private function _formatterFactory()
     {
         return $this->getFormatterInstance()
-            ->setResource($this->_response->getResponseObject())
+            ->setResource($this->response->getResponseObject())
             ->format();
     }
 }
