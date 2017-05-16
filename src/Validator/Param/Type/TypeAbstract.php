@@ -45,6 +45,7 @@ abstract class TypeAbstract extends ParamAbstract implements TypeInterface
     {
         $this->cast()
              ->validValue()
+             ->validType()
              ->required()
              ->defaultValue();
 
@@ -96,6 +97,17 @@ abstract class TypeAbstract extends ParamAbstract implements TypeInterface
     public function required()
     {
         if ($this->isRequiredNotSet()) {
+            throw new \G4\CleanCore\Exception\Validation($this->_name, $this->_value, $this->_meta);
+        }
+        return $this;
+    }
+
+    /**
+     * @return TypeAbstract
+     */
+    public function validType()
+    {
+        if (!$this->isValueNull() && !$this->type()) {
             throw new \G4\CleanCore\Exception\Validation($this->_name, $this->_value, $this->_meta);
         }
         return $this;
