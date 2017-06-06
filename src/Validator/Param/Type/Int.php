@@ -8,7 +8,11 @@ class Int extends TypeAbstract
 {
     public function cast()
     {
-        if (!$this->isValueNull() && !$this->isValueEmptyString()) {
+        if ($this->isValueEmptyString()){
+            $this->_value = null;
+        }
+
+        if (!$this->isValueNull()) {
             $this->_value = (int) $this->_value;
         }
         return $this;
