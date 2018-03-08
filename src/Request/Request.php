@@ -81,7 +81,7 @@ class Request
 
     /**
      * @param string $key
-     * @return multitype: null|string|array
+     * @return null|int|string|array
      */
     public function getParam($key)
     {
@@ -108,7 +108,7 @@ class Request
 
     /**
      * @param string $key
-     * @return NULL|string
+     * @return null|string
      */
     public function getServerVariable($key)
     {
@@ -158,6 +158,7 @@ class Request
 
     /**
      * @param string $key
+     * @return bool
      */
     public function hasParam($key)
     {
@@ -240,7 +241,7 @@ class Request
     }
 
     /**
-     * @param string $resource
+     * @param string $resourceName
      * @return \G4\CleanCore\Request\Request
      */
     public function setResourceName($resourceName)

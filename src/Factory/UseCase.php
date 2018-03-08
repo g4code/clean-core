@@ -50,7 +50,7 @@ class UseCase
     }
 
     /**
-     * @return G4\CleanCore\Response\Response
+     * @return \G4\CleanCore\Response\Response
      */
     public function getResponse()
     {

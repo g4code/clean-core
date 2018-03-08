@@ -10,6 +10,9 @@ class Front
 {
     private $_appNamespace;
 
+    /**
+     * @var \G4\CleanCore\Dispatcher\Dispatcher
+     */
     private $_dispatcher;
 
     private $_formatter;
@@ -25,7 +28,7 @@ class Front
     private $_useCase;
 
     /**
-     * @var \G4\CleanCore\Response\Request
+     * @var \G4\CleanCore\Request\Request
      */
     private $_request;
 

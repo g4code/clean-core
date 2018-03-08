@@ -74,9 +74,10 @@ abstract class UseCaseAbstract implements UseCaseInterface
      * Factory method for use of a new UseCase class
      * Returns whole resource or just one part
      *
-     * @param string  $useCaseName
-     * @param string  $resourcePart
+     * @param string $useCaseName
+     * @param string $resourcePart
      * @param Request $request
+     * @return mixed
      */
     public function reference($useCaseName, $resourcePart = null, Request $request = null)
     {
@@ -93,7 +94,7 @@ abstract class UseCaseAbstract implements UseCaseInterface
      * @param Request $request
      * @return UseCaseAbstract
      */
-    public function setRequest($request) //TODO: Drasko: add Request type hinting
+    public function setRequest(Request $request)
     {
         $this->_request = $request;
         return $this;
