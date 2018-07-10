@@ -4,7 +4,7 @@ namespace G4\CleanCore\Validator\Param\Type;
 
 use G4\CleanCore\Validator\Param\Type\TypeAbstract;
 
-class String extends TypeAbstract
+class StringValidator extends TypeAbstract
 {
     public function cast()
     {
