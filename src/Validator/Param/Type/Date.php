@@ -2,9 +2,7 @@
 
 namespace G4\CleanCore\Validator\Param\Type;
 
-use G4\CleanCore\Validator\Param\Type\String;
-
-class Date extends String
+class Date extends StringValidator
 {
     public function isInValidRange()
     {

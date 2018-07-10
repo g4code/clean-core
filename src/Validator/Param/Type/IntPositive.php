@@ -2,7 +2,7 @@
 
 namespace G4\CleanCore\Validator\Param\Type;
 
-class IntPositive extends \G4\CleanCore\Validator\Param\Type\Int
+class IntPositive extends IntValidator
 {
     public function type()
     {

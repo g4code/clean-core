@@ -2,9 +2,7 @@
 
 namespace G4\CleanCore\Validator\Param\Type;
 
-use G4\CleanCore\Validator\Param\Type\String;
-
-class Md5 extends String
+class Md5 extends StringValidator
 {
     public function type()
     {

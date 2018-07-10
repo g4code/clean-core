@@ -2,7 +2,7 @@
 
 namespace G4\CleanCore\Validator\Param\Type;
 
-class StringValidJson extends String
+class StringValidJson extends StringValidator
 {
     public function cast()
     {

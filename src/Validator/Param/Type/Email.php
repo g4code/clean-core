@@ -2,9 +2,7 @@
 
 namespace G4\CleanCore\Validator\Param\Type;
 
-use G4\CleanCore\Validator\Param\Type\String;
-
-class Email extends String
+class Email extends StringValidator
 {
     public function type()
     {
