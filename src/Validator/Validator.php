@@ -12,14 +12,14 @@ class Validator implements ValidatorInterface
     const TYPE_JSON              = 'Json';
     const TYPE_DATE              = 'Date';
     const TYPE_EMAIL             = 'Email';
-    const TYPE_INT               = 'Int';
+    const TYPE_INT               = 'IntValidator';
     const TYPE_INT_POSITIVE      = 'IntPositive';
     const TYPE_INT_NEGATIVE      = 'IntNegative';
     const TYPE_INT_ZERO_POSITIVE = 'IntZeroPositive';
     const TYPE_INT_ZERO_NEGATIVE = 'IntZeroNegative';
     const TYPE_IP                = 'Ip';
     const TYPE_MD5               = 'Md5';
-    const TYPE_STRING            = 'String';
+    const TYPE_STRING            = 'StringValidator';
     const TYPE_STRING_VALID_JSON = 'StringValidJson';
     const TYPE_URL               = 'Url';
 
