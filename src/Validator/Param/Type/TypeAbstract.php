@@ -124,12 +124,15 @@ abstract class TypeAbstract extends ParamAbstract implements TypeInterface
      */
     public function validValue()
     {
-        if ($this->isValidMetaSet() && !$this->isInValidRange()) {
-            if ($this->isValidMetaStrict()) { // @ToDo: This is a feature flag for invalid optional parameter value; Clean up when flag is removed (Sasa|08/2018)
-                if (!($this->isValueNull() && !$this->isRequiredMetaSet())) { // Avoid the case when parameter is not submitted but it is optional and there is no default value
-                    throw new \G4\CleanCore\Exception\Validation($this->_name, $this->_value, $this->_meta);
-                }
-            } else {
+        if ($this->isValidMetaStrict()) { // @ToDo: This is a feature flag for invalid optional parameter value; Clean up when flag is removed (Sasa|08/2018)
+            if (
+                $this->isValidMetaSet() && !$this->isInValidRange() && // value is invalid
+                !($this->isValueNull() && !$this->isRequiredMetaSet()) // null value is invalid only if parameter is required
+            ) {
+                throw new \G4\CleanCore\Exception\Validation($this->_name, $this->_value, $this->_meta);
+            }
+        } else { // @ToDo: This is an old incorrect state; Remove with feature flag for invalid optional parameter value (Sasa|08/2018)
+            if ($this->isValidMetaSet() && !$this->isInValidRange()) {
                 $this->_value = null;
             }
         }
