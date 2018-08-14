@@ -8,6 +8,7 @@ use G4\CleanCore\Validator\Param\Type\TypeInterface;
 abstract class TypeAbstract extends ParamAbstract implements TypeInterface
 {
     const ARRAY_VALUE_SEPARATOR = '|';
+    const IS_VALID_META_STRICT = false; // @ToDo: This is a feature flag for invalid optional parameter value; Clean up when flag is removed (Sasa|08/2018)
 
     /**
      * @return TypeAbstract
@@ -74,6 +75,11 @@ abstract class TypeAbstract extends ParamAbstract implements TypeInterface
         return isset($this->_meta['valid']);
     }
 
+    public function isValidMetaStrict()
+    {
+        return self::IS_VALID_META_STRICT; // @ToDo: This is a feature flag for invalid optional parameter value (Sasa|08/2018)
+    }
+
     public function isValueEmptyString()
     {
         return $this->_value === '';
@@ -118,8 +124,17 @@ abstract class TypeAbstract extends ParamAbstract implements TypeInterface
      */
     public function validValue()
     {
-        if ($this->isValidMetaSet() && !$this->isInValidRange()) {
-            $this->_value = null;
+        if ($this->isValidMetaStrict()) { // @ToDo: This is a feature flag for invalid optional parameter value; Clean up when flag is removed (Sasa|08/2018)
+            if (
+                $this->isValidMetaSet() && !$this->isInValidRange() && // value is invalid
+                !($this->isValueNull() && !$this->isRequiredMetaSet()) // null value is invalid only if parameter is required
+            ) {
+                throw new \G4\CleanCore\Exception\Validation($this->_name, $this->_value, $this->_meta);
+            }
+        } else { // @ToDo: This is an old incorrect state; Remove with feature flag for invalid optional parameter value (Sasa|08/2018)
+            if ($this->isValidMetaSet() && !$this->isInValidRange()) {
+                $this->_value = null;
+            }
         }
         return $this;
     }
