@@ -9,7 +9,7 @@ class StringValidator extends TypeAbstract
     public function cast()
     {
         if (!$this->isValueNull()) {
-            $this->_value = (string) $this->_value;
+            $this->_value = is_array($this->_value) || is_object($this->_value) ? $this->_value : strval($this->_value);
         }
         return $this;
     }
