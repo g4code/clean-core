@@ -6,6 +6,7 @@ use G4\CleanCore\Request\Request;
 
 class Factory
 {
+    /** @var BootstrapInterface */
     private $_bootstrap;
 
     /**
@@ -22,7 +23,7 @@ class Factory
 
     public function initBootstrap()
     {
-        if (!$this->_bootstrap instanceof \G4\CleanCore\Bootstrap\BootstrapInterface) {
+        if (!$this->_bootstrap instanceof BootstrapInterface) {
             $this
                 ->_constructFullBootstrapName()
                 ->_bootstrapFactory();
@@ -30,8 +31,16 @@ class Factory
     }
 
     /**
+     * @return BootstrapInterface
+     */
+    public function getBootstrap()
+    {
+        return $this->_bootstrap;
+    }
+
+    /**
      * @param string $serviceNamespace
-     * @return \G4\CleanCore\Bootstrap\Factory
+     * @return Factory
      */
     public function setAppNamespace($appNamespace)
     {
@@ -41,7 +50,7 @@ class Factory
 
     /**
      * @param \G4\CleanCore\Request\Request $request
-     * @return \G4\CleanCore\Bootstrap\Factory
+     * @return Factory
      */
     public function setRequest(Request $request)
     {
@@ -50,7 +59,7 @@ class Factory
     }
 
     /**
-     * @return \G4\CleanCore\Bootstrap\Factory
+     * @return Factory
      */
     private function _constructFullBootstrapName()
     {
@@ -73,8 +82,8 @@ class Factory
     {
         if ($this->_bootstrapExist()) {
             $bootstrapName    = $this->_fullBootstrapName;
-            $this->bootstrap = new $bootstrapName();
-            $this->bootstrap
+            $this->_bootstrap = new $bootstrapName();
+            $this->_bootstrap
                 ->setRequest($this->_request)
                 ->init();
         }
