@@ -269,4 +269,22 @@ class Request
         unset($this->_params[$key]);
         return $this;
     }
+
+    /**
+     * @param string $key
+     * @return int
+     */
+    public function getInt($key)
+    {
+        return filter_var($this->getParam($key), FILTER_VALIDATE_INT);
+    }
+
+    /**
+     * @param string $key
+     * @return bool
+     */
+    public function getBoolean($key)
+    {
+        return filter_var($this->getParam($key), FILTER_VALIDATE_BOOLEAN);
+    }
 }
