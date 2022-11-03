@@ -9,6 +9,9 @@ use Rector\CodeQuality\Rector\ClassMethod\ReturnTypeFromStrictScalarReturnExprRe
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNewArrayRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictTypedPropertyRector;
+use Rector\TypeDeclaration\Rector\FunctionLike\ParamTypeDeclarationRector;
 use Rector\TypeDeclaration\Rector\FunctionLike\ReturnTypeDeclarationRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromReturnNewRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictBoolReturnExprRector;
@@ -29,9 +32,9 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(ReturnTypeFromReturnNewRector::class);
     $rectorConfig->rule(ReturnTypeFromStrictBoolReturnExprRector::class);
     $rectorConfig->rule(ReturnTypeFromStrictNativeCallRector::class);
-    $rectorConfig->rule(\Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNewArrayRector::class);
-    $rectorConfig->rule(\Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictTypedPropertyRector::class);
-    $rectorConfig->rule(\Rector\TypeDeclaration\Rector\FunctionLike\ParamTypeDeclarationRector::class);
+    $rectorConfig->rule(ReturnTypeFromStrictNewArrayRector::class);
+    $rectorConfig->rule(ReturnTypeFromStrictTypedPropertyRector::class);
+    $rectorConfig->rule(ParamTypeDeclarationRector::class);
 
     // define sets of rules
     $rectorConfig->sets([

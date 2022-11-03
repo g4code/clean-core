@@ -100,9 +100,6 @@ class Application
         return $this;
     }
 
-    /**
-     * @param string $serviceNamespace
-     */
     public function setAppNamespace(string $appNamespace): self
     {
         $this->appNamespace = $appNamespace;
