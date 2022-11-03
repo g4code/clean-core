@@ -7,36 +7,36 @@ use G4\CleanCore\Formatter\Collection\CollectionAbstract;
 abstract class PaginationAbstract extends CollectionAbstract
 {
 
-    private $_paginator;
+    private $paginator;
 
 
-    public function format()
+    public function format(): array
     {
-        $this->_setPaginator();
+        $this->setPaginator();
 
-        if ($this->_hasItems()) {
+        if ($this->hasItems()) {
 
-            foreach ($this->_paginator as $resource) {
-                $this->_formatOneResource($resource);
+            foreach ($this->paginator as $resource) {
+                $this->formatOneResource($resource);
             }
         }
 
-        return $this->_getPaginatorResponse();
+        return $this->getPaginatorResponse();
     }
 
-    protected function _getPaginatorResponse()
+    protected function getPaginatorResponse(): array
     {
-        return array(
-            'current_page_number' => $this->_paginator->getCurrentPageNumber(),
-            'total_item_count'    => $this->_paginator->getTotalItemCount(),
-            'item_count_per_page' => $this->_paginator->getItemCountPerPage(),
-            'current_item_count'  => $this->_paginator->getCurrentItemCount(),
-            'page_count'          => count($this->_paginator),
-            'current_items'       => $this->getData()
-        );
+        return [
+            'current_page_number' => $this->paginator->getCurrentPageNumber(),
+            'total_item_count' => $this->paginator->getTotalItemCount(),
+            'item_count_per_page' => $this->paginator->getItemCountPerPage(),
+            'current_item_count' => $this->paginator->getCurrentItemCount(),
+            'page_count' => is_countable($this->paginator) ? count($this->paginator) : 0,
+            'current_items' => $this->getData()
+        ];
     }
 
-    protected function _getResourcePage()
+    protected function getResourcePage()
     {
         $page = $this->getResource('page');
         return empty($page)
@@ -44,7 +44,7 @@ abstract class PaginationAbstract extends CollectionAbstract
             : $page;
     }
 
-    protected function _getResourcePerPage()
+    protected function getResourcePerPage()
     {
         $perPage = $this->getResource('per_page');
         return empty($perPage)
@@ -52,24 +52,21 @@ abstract class PaginationAbstract extends CollectionAbstract
             : $perPage;
     }
 
-    /**
-     * @return \G4\CleanCore\Formatter\Collection\PaginationAbstract
-     */
-    protected function _setPaginator()
+    protected function setPaginator(): self
     {
-        $iteratorFactory  = new \G4\CleanCore\Formatter\Collection\IteratorFactory($this->_getResourceCollection());
-        $this->_paginator = new \Zend\Paginator\Paginator($iteratorFactory->getIterator());
-        $this->_paginator
-            ->setItemCountPerPage($this->_getResourcePerPage())
-            ->setCurrentPageNumber($this->_getResourcePage());
+        $iteratorFactory = new \G4\CleanCore\Formatter\Collection\IteratorFactory($this->getResourceCollection());
+        $this->paginator = new \Zend\Paginator\Paginator($iteratorFactory->getIterator());
+        $this->paginator
+            ->setItemCountPerPage($this->getResourcePerPage())
+            ->setCurrentPageNumber($this->getResourcePage());
 
         return $this;
     }
 
-    private function _hasItems()
+    private function hasItems(): bool
     {
-        return is_object($this->_paginator)
-            && $this->_paginator->getItemCount($this->_paginator) > 0
-            && $this->getResource('page') <= count($this->_paginator);
+        return is_object($this->paginator)
+            && $this->paginator->getItemCount($this->paginator) > 0
+            && $this->getResource('page') <= (is_countable($this->paginator) ? count($this->paginator) : 0);
     }
 }

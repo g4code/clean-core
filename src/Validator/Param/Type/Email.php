@@ -4,10 +4,10 @@ namespace G4\CleanCore\Validator\Param\Type;
 
 class Email extends StringValidator
 {
-    public function type()
+    public function type(): bool
     {
-        $this->_value = preg_replace('/\s+/', '+', trim($this->_value));
+        $this->value = preg_replace('/\s+/', '+', trim($this->value));
         return parent::type()
-            && filter_var($this->_value, FILTER_VALIDATE_EMAIL);
+            && filter_var($this->value, FILTER_VALIDATE_EMAIL);
     }
 }

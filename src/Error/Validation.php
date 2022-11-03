@@ -9,48 +9,44 @@ class Validation
     /**
      * @var \G4\CleanCore\Exception\Validation[]
      */
-    private $_exceptions;
+    private $exceptions = [];
 
-    private $_messages;
+    private $messages = [];
 
     public function __construct()
     {
-        $this->_exceptions = array();
-        $this->_messages   = array();
     }
     
-    public function addException(\G4\CleanCore\Exception\Validation $exception)
+    public function addException(\G4\CleanCore\Exception\Validation $exception): self
     {
-        $this->_exceptions[] = $exception;
+        $this->exceptions[] = $exception;
         return $this;
     }
 
-    public function getMessages()
+    public function getMessages(): array
     {
-        $this->_iterateTroughExceptions();
+        $this->iterateTroughExceptions();
 
-        return array(
-            'invalid_params' => $this->_messages
-        );
+        return ['invalid_params' => $this->messages];
     }
 
-    public function hasErrors()
+    public function hasErrors(): bool
     {
-        return !empty($this->_exceptions);
+        return !empty($this->exceptions);
     }
     
-    private function _addMessage(\G4\CleanCore\Exception\Validation $exception)
+    private function addMessage(\G4\CleanCore\Exception\Validation $exception): void
     {
-        $this->_messages[] = [
+        $this->messages[] = [
             $exception->getName() =>  $exception->getValue()
         ];
     }
 
-    private function _iterateTroughExceptions()
+    private function iterateTroughExceptions(): void
     {
-        foreach($this->_exceptions as $oneException)
+        foreach($this->exceptions as $oneException)
         {
-            $this->_addMessage($oneException);
+            $this->addMessage($oneException);
         }
     }
 }

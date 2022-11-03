@@ -10,118 +10,89 @@ class Dispatcher
     /**
      * @var string
      */
-    private $_fullServiceName;
+    private $fullServiceName;
 
     /**
      * @var Request
      */
-    private $_request;
+    private $request;
 
     /**
      * @var ServiceAbstract
      */
-    private $_service;
+    private $service = null;
 
     /**
      * @var string
      */
-    private $_appNamespace;
+    private $appNamespace;
 
     public function __construct()
     {
-        $this->_service = null;
     }
 
-    /**
-     * @return \G4\CleanCore\Service\ServiceAbstract
-     */
-    public function getService()
+    public function getService(): \G4\CleanCore\Service\ServiceAbstract
     {
-        return $this->_service;
+        return $this->service;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isDispatchable()
+    public function isDispatchable(): bool
     {
         $this
             ->constructFullServiceName()
             ->serviceFactory();
 
-        return $this->_service instanceof ServiceAbstract;
+        return $this->service instanceof ServiceAbstract;
     }
 
-    /**
-     * @param Request $request
-     * @return \G4\CleanCore\Dispatcher\Dispatcher
-     */
-    public function setRequest(Request $request)
+    public function setRequest(Request $request): self
     {
-        $this->_request = $request;
+        $this->request = $request;
         return $this;
     }
 
     /**
      * @param string $serviceNamespace
-     * @return \G4\CleanCore\Dispatcher\Dispatcher
      */
-    public function setAppNamespace($appNamespace)
+    public function setAppNamespace(string $appNamespace): self
     {
-        $this->_appNamespace = $appNamespace;
+        $this->appNamespace = $appNamespace;
         return $this;
     }
 
-    /**
-     * @return \G4\CleanCore\Dispatcher\Dispatcher
-     */
-    private function constructFullServiceName()
+    private function constructFullServiceName(): self
     {
-        $this->_fullServiceName = join('\\', array(
-            $this->_appNamespace,
-            'Service',
-            $this->getServiceName(),
-            $this->getClassName()
-        ));
+        $this->fullServiceName = join('\\', [$this->appNamespace, 'Service', $this->getServiceName(), $this->getClassName()]);
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    private function getClassName()
+    private function getClassName(): string
     {
-        return ucfirst($this->_request->getMethod());
+        return ucfirst($this->request->getMethod());
     }
 
-    /**
-     * @return string
-     */
-    private function getServiceName()
+    private function getServiceName(): string
     {
         return ucfirst(
             preg_replace_callback('/-([a-z])/',
-                function($matches) {
+                function($matches): string {
                     return strtoupper($matches[1]);
                 },
-                $this->_request->getResourceName()
+                $this->request->getResourceName()
             )
         );
     }
 
-    /**
-     * @return bool
-     */
-    private function serviceExist()
+    private function serviceExist(): bool
     {
-        return class_exists($this->_fullServiceName);
+        return class_exists($this->fullServiceName);
     }
 
-    private function serviceFactory()
+    private function serviceFactory(): void
     {
         if ($this->serviceExist()) {
-            $serviceName    = $this->_fullServiceName;
-            $this->_service = new $serviceName();
+            $serviceName    = $this->fullServiceName;
+            $this->service = new $serviceName();
         }
     }
 }

@@ -2,68 +2,67 @@
 
 namespace G4\CleanCore\Formatter\Collection;
 
-use G4\CleanCore\Formatter\Collection\CollectionInterface;
 use G4\CleanCore\Formatter\FormatterAbstract;
 
 abstract class CollectionAbstract extends FormatterAbstract implements CollectionInterface
 {
-    private $_data;
+    private $data;
 
     public function __construct()
     {
-        $this->setData(array());
+        $this->setData([]);
     }
 
-    public function appendToData($value)
+    public function appendToData($value): self
     {
-        $this->_data[] = $value;
+        $this->data[] = $value;
         return $this;
     }
 
     public function format()
     {
-        foreach ($this->_getResourceCollection() as $resource) {
-            $this->_formatOneResource($resource);
+        foreach ($this->getResourceCollection() as $resource) {
+            $this->formatOneResource($resource);
         }
         return $this->getData();
     }
 
-    public function getData()
+    public function getData(): array
     {
-        return $this->_data;
+        return $this->data;
     }
 
-    public function setData(array $data)
+    public function setData(array $data): self
     {
-        $this->_data = $data;
+        $this->data = $data;
         return $this;
     }
 
-    public function setDataPart($key, $value)
+    public function setDataPart($key, $value): self
     {
-        $this->_data[$key] = $value;
+        $this->data[$key] = $value;
         return $this;
     }
 
-    protected function _formatOneResource($oneResource)
+    protected function formatOneResource($oneResource)
     {
         $this
             ->addToResource('resource', $oneResource)
-            ->appendToData($this->_getOneFormattedResource());
+            ->appendToData($this->getOneFormattedResource());
     }
 
-    protected function _getOneFormattedResource()
+    protected function getOneFormattedResource()
     {
         return $this->getOneResourceFormatterInstance()
             ->setResource($this->getResource())
             ->format();
     }
 
-    protected function _getResourceCollection()
+    protected function getResourceCollection()
     {
         $collection = $this->getResource('collection');
         return empty($collection)
-            ? array()
+            ? []
             : $collection;
     }
 }

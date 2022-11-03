@@ -7,83 +7,66 @@ use G4\CleanCore\Request\Request;
 class Factory
 {
     /** @var BootstrapInterface */
-    private $_bootstrap;
+    private $bootstrap;
 
     /**
      * @var string
      */
-    private $_appNamespace;
+    private $appNamespace;
 
-    private $_fullBootstrapName;
+    private $fullBootstrapName;
 
     /**
      * @var \G4\CleanCore\Request\Request
      */
     private $_request;
 
-    public function initBootstrap()
+    public function initBootstrap(): void
     {
-        if (!$this->_bootstrap instanceof BootstrapInterface) {
+        if (!$this->bootstrap instanceof BootstrapInterface) {
             $this
-                ->_constructFullBootstrapName()
-                ->_bootstrapFactory();
+                ->constructFullBootstrapName()
+                ->bootstrapFactory();
         }
     }
 
-    /**
-     * @return BootstrapInterface
-     */
-    public function getBootstrap()
+    public function getBootstrap(): \G4\CleanCore\Bootstrap\BootstrapInterface
     {
-        return $this->_bootstrap;
+        return $this->bootstrap;
     }
 
     /**
      * @param string $serviceNamespace
-     * @return Factory
      */
-    public function setAppNamespace($appNamespace)
+    public function setAppNamespace(string $appNamespace): self
     {
-        $this->_appNamespace = $appNamespace;
+        $this->appNamespace = $appNamespace;
         return $this;
     }
 
-    /**
-     * @param \G4\CleanCore\Request\Request $request
-     * @return Factory
-     */
-    public function setRequest(Request $request)
+    public function setRequest(Request $request): self
     {
         $this->_request = $request;
         return $this;
     }
 
-    /**
-     * @return Factory
-     */
-    private function _constructFullBootstrapName()
+    private function constructFullBootstrapName(): self
     {
-        $this->_fullBootstrapName = join('\\', array(
-            $this->_appNamespace,
-            'Bootstrap'
-        ));
+        $this->fullBootstrapName = join('\\', [$this->appNamespace, 'Bootstrap']);
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    private function _bootstrapExist()
+    private function bootstrapExist(): bool
     {
-        return class_exists($this->_fullBootstrapName);
+        return class_exists($this->fullBootstrapName);
     }
 
-    private function _bootstrapFactory()
+    private function bootstrapFactory(): void
     {
-        if ($this->_bootstrapExist()) {
-            $bootstrapName    = $this->_fullBootstrapName;
-            $this->_bootstrap = new $bootstrapName();
-            $this->_bootstrap
+        if ($this->bootstrapExist()) {
+            $bootstrapName    = $this->fullBootstrapName;
+            $this->bootstrap = new $bootstrapName();
+            $this->bootstrap
                 ->setRequest($this->_request)
                 ->init();
         }

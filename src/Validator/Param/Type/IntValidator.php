@@ -2,29 +2,27 @@
 
 namespace G4\CleanCore\Validator\Param\Type;
 
-use G4\CleanCore\Validator\Param\Type\TypeAbstract;
-
 class IntValidator extends TypeAbstract
 {
     public function cast()
     {
         if ($this->isValueEmptyString()){
-            $this->_value = null;
+            $this->value = null;
         }
 
         if (!$this->isValueNull()) {
-            $this->_value = (int) $this->_value;
+            $this->value = (int) $this->value;
         }
         return $this;
     }
 
-    public function isValueNull()
+    public function isValueNull(): bool
     {
-        return $this->_value === null;
+        return $this->value === null;
     }
 
-    public function type()
+    public function type(): bool
     {
-        return is_int($this->_value);
+        return is_int($this->value);
     }
 }

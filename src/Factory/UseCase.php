@@ -9,33 +9,32 @@ class UseCase
     /**
      * @var \G4\CleanCore\Request\Request
      */
-    private $_request;
+    private $request;
 
     /**
      * @var \G4\CleanCore\Response\Response
      */
-    private $_response;
+    private $response;
 
     /**
      * @var \G4\CleanCore\UseCase\UseCaseAbstract
      */
-    private $_useCase;
+    private $useCase;
 
     /**
      * @var string
      */
-    private $_useCaseName;
+    private $useCaseName;
 
     /**
      * @throws \Exception
-     * @return \G4\CleanCore\Request\Request
      */
-    public function getRequest()
+    public function getRequest(): \G4\CleanCore\Request\Request
     {
-        if (!$this->_request instanceof \G4\CleanCore\Request\Request) {
+        if (!$this->request instanceof \G4\CleanCore\Request\Request) {
             throw new \Exception('Request must be instance of \G4\CleanCore\Request\Request');
         }
-        return $this->_request;
+        return $this->request;
     }
 
     /**
@@ -49,68 +48,50 @@ class UseCase
             : $this->getResponse()->getResponseObjectPart($part);
     }
 
-    /**
-     * @return \G4\CleanCore\Response\Response
-     */
-    public function getResponse()
+    public function getResponse(): \G4\CleanCore\Response\Response
     {
-        if (!$this->_response instanceof \G4\CleanCore\Response\Response) {
-            $this->_setResponse();
+        if (!$this->response instanceof \G4\CleanCore\Response\Response) {
+            $this->setResponse();
         }
-        return $this->_response;
+        return $this->response;
     }
 
     /**
      * @throws \Exception
-     * @return \G4\CleanCore\UseCase\UseCaseAbstract
      */
-    public function getUseCase()
+    public function getUseCase(): \G4\CleanCore\UseCase\UseCaseAbstract
     {
-        if (!$this->_useCase instanceof \G4\CleanCore\UseCase\UseCaseAbstract) {
-            $this->_factory();
+        if (!$this->useCase instanceof \G4\CleanCore\UseCase\UseCaseAbstract) {
+            $this->factory();
         }
-        return $this->_useCase;
+        return $this->useCase;
     }
 
-    /**
-     * @param \G4\CleanCore\Request\Request $request
-     * @return \G4\CleanCore\Factory\UseCase
-     */
-    public function setRequest(Request $request)
+    public function setRequest(Request $request): self
     {
-        $this->_request = $request;
+        $this->request = $request;
         return $this;
     }
 
-    /**
-     * @param string $useCaseName
-     * @return \G4\CleanCore\Factory\UseCase
-     */
-    public function setUseCaseName($useCaseName)
+    public function setUseCaseName(string $useCaseName): self
     {
-        $this->_useCaseName = $useCaseName;
+        $this->useCaseName = $useCaseName;
         return $this;
     }
 
-    /**
-     * @return \G4\CleanCore\Factory\UseCase
-     */
-    private function _factory()
+    private function factory(): self
     {
-        $useCaseName    = $this->_useCaseName;
-        $this->_useCase = new $useCaseName();
-        $this->_useCase
+        $useCaseName    = $this->useCaseName;
+        $this->useCase = new $useCaseName();
+        $this->useCase
             ->setRequest($this->getRequest());
         return $this;
     }
 
-    /**
-     * @return \G4\CleanCore\Factory\UseCase
-     */
-    private function _setResponse()
+    private function setResponse(): self
     {
         $this->getUseCase()->run();
-        $this->_response = $this->getUseCase()->getResponse();
+        $this->response = $this->getUseCase()->getResponse();
         return $this;
     }
 }
