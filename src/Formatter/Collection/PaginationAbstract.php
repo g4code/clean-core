@@ -26,7 +26,14 @@ abstract class PaginationAbstract extends CollectionAbstract
 
     protected function getPaginatorResponse(): array
     {
-        return ['current_page_number' => $this->paginator->getCurrentPageNumber(), 'total_item_count'    => $this->paginator->getTotalItemCount(), 'item_count_per_page' => $this->paginator->getItemCountPerPage(), 'current_item_count'  => $this->paginator->getCurrentItemCount(), 'page_count'          => is_countable($this->paginator) ? count($this->paginator) : 0, 'current_items'       => $this->getData()];
+        return [
+            'current_page_number' => $this->paginator->getCurrentPageNumber(),
+            'total_item_count' => $this->paginator->getTotalItemCount(),
+            'item_count_per_page' => $this->paginator->getItemCountPerPage(),
+            'current_item_count' => $this->paginator->getCurrentItemCount(),
+            'page_count' => is_countable($this->paginator) ? count($this->paginator) : 0,
+            'current_items' => $this->getData()
+        ];
     }
 
     protected function getResourcePage()
@@ -47,7 +54,7 @@ abstract class PaginationAbstract extends CollectionAbstract
 
     protected function setPaginator(): self
     {
-        $iteratorFactory  = new \G4\CleanCore\Formatter\Collection\IteratorFactory($this->getResourceCollection());
+        $iteratorFactory = new \G4\CleanCore\Formatter\Collection\IteratorFactory($this->getResourceCollection());
         $this->paginator = new \Zend\Paginator\Paginator($iteratorFactory->getIterator());
         $this->paginator
             ->setItemCountPerPage($this->getResourcePerPage())

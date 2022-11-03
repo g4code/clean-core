@@ -4,7 +4,6 @@ namespace G4\CleanCore\UseCase;
 
 use G4\CleanCore\Response\Response;
 use G4\CleanCore\Request\Request;
-use G4\CleanCore\UseCase\UseCaseInterface;
 
 abstract class UseCaseAbstract implements UseCaseInterface
 {

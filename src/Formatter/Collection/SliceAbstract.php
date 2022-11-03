@@ -28,10 +28,17 @@ abstract class SliceAbstract extends CollectionAbstract
     protected function getPaginatorResponse(): array
     {
         $totalItems = $this->getTotalItemsCount();
-        $resource   = $this->getResource();
-        $data       = $this->getData();
+        $resource = $this->getResource();
+        $data = $this->getData();
 
-        return ['current_page_number' => !empty($resource) ? $this->getResource('page') : null, 'total_item_count'    => $totalItems, 'item_count_per_page' => !empty($resource) ? $this->getResource('per_page') : null, 'current_item_count'  => is_countable($data) ? count($data) : 0, 'page_count'          => !empty($resource) ? ceil($totalItems / $this->getResource('per_page')) : 0, 'current_items'       => $data];
+        return [
+            'current_page_number' => ! empty($resource) ? $this->getResource('page') : null,
+            'total_item_count' => $totalItems,
+            'item_count_per_page' => ! empty($resource) ? $this->getResource('per_page') : null,
+            'current_item_count' => is_countable($data) ? count($data) : 0,
+            'page_count' => ! empty($resource) ? ceil($totalItems / $this->getResource('per_page')) : 0,
+            'current_items' => $data
+        ];
     }
 
     private function collectionNotCountable()

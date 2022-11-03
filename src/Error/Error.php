@@ -19,7 +19,7 @@ class Error
             ->setHttpResponseCode($this->getHttpCode())
             ->setResponseObject([
                 'error' => [
-                    'code'    => $this->exception->getCode(),
+                    'code' => $this->exception->getCode(),
                     'message' => $this->exception->getMessage(),
                 ]
             ]);
@@ -46,6 +46,12 @@ class Error
 
     private function getFormattedResponseMessage(): array
     {
-        return ['code'    => $this->exception->getCode(), 'message' => $this->exception->getMessage(), 'file'    => $this->exception->getFile(), 'line'    => $this->exception->getLine(), 'trace'   => $this->exception->getTrace()];
+        return [
+            'code' => $this->exception->getCode(),
+            'message' => $this->exception->getMessage(),
+            'file' => $this->exception->getFile(),
+            'line' => $this->exception->getLine(),
+            'trace' => $this->exception->getTrace()
+        ];
     }
 }
