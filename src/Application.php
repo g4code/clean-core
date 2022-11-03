@@ -40,18 +40,12 @@ class Application
     private $appNamespace;
 
 
-    /**
-     * @return string
-     */
-    public function getAppNamespace()
+    public function getAppNamespace(): string
     {
         return $this->appNamespace;
     }
 
-    /**
-     * @return \G4\CleanCore\Bootstrap\Factory
-     */
-    public function getBootstrapFactory()
+    public function getBootstrapFactory(): \G4\CleanCore\Bootstrap\Factory
     {
         if (!$this->bootstrapFactory instanceof \G4\CleanCore\Bootstrap\Factory) {
             $this->bootstrapFactory = new \G4\CleanCore\Bootstrap\Factory();
@@ -59,10 +53,7 @@ class Application
         return $this->bootstrapFactory;
     }
 
-    /**
-     * @return \G4\CleanCore\Error\Error
-     */
-    public function getError()
+    public function getError(): \G4\CleanCore\Error\Error
     {
         if (!$this->error instanceof \G4\CleanCore\Error\Error) {
             $this->error = new \G4\CleanCore\Error\Error();
@@ -70,10 +61,7 @@ class Application
         return $this->error;
     }
 
-    /**
-     * @return \G4\CleanCore\Controller\Front
-     */
-    public function getFrontController()
+    public function getFrontController(): \G4\CleanCore\Controller\Front
     {
         if (!$this->frontController instanceof Front) {
             $this->frontController = new Front();
@@ -81,10 +69,7 @@ class Application
         return $this->frontController;
     }
 
-    /**
-     * @return \G4\CleanCore\Response\Response
-     */
-    public function getResponse()
+    public function getResponse(): \G4\CleanCore\Response\Response
     {
         if (!$this->response instanceof Response) {
             $this->response = new Response();
@@ -92,10 +77,7 @@ class Application
         return $this->response;
     }
 
-    /**
-     * @return \G4\CleanCore\Request\Request
-     */
-    public function getRequest()
+    public function getRequest(): \G4\CleanCore\Request\Request
     {
         if (!$this->request instanceof Request) {
             $this->request = new Request();
@@ -103,7 +85,7 @@ class Application
         return $this->request;
     }
 
-    public function run()
+    public function run(): self
     {
         try {
             $this
@@ -120,28 +102,20 @@ class Application
 
     /**
      * @param string $serviceNamespace
-     * @return \G4\CleanCore\Application
      */
-    public function setAppNamespace($appNamespace)
+    public function setAppNamespace(string $appNamespace): self
     {
         $this->appNamespace = $appNamespace;
         return $this;
     }
 
-    /**
-     * @param Request $request
-     * @return \G4\CleanCore\Application
-     */
-    public function setRequest(Request $request)
+    public function setRequest(Request $request): self
     {
         $this->request = $request;
         return $this;
     }
 
-    /**
-     * @return \G4\CleanCore\Application
-     */
-    private function initBootstrap()
+    private function initBootstrap(): self
     {
         $this->getBootstrapFactory()
             ->setAppNamespace($this->appNamespace)
@@ -150,10 +124,7 @@ class Application
         return $this;
     }
 
-    /**
-     * @return \G4\CleanCore\Application
-     */
-    private function runFrontController()
+    private function runFrontController(): self
     {
         $this->getFrontController()
             ->setAppNamespace($this->appNamespace)

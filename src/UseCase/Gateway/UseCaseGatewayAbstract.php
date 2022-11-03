@@ -5,7 +5,6 @@ namespace G4\CleanCore\UseCase\Gateway;
 use G4\CleanCore\UseCase\UseCaseAbstract;
 use G4\Constants\Format;
 use G4\Gateway\GatewayInterface;
-use G4\CleanCore\UseCase\Gateway\UseCaseGatewayInterface;
 
 abstract class UseCaseGatewayAbstract extends UseCaseAbstract implements UseCaseGatewayInterface
 {
@@ -31,7 +30,7 @@ abstract class UseCaseGatewayAbstract extends UseCaseAbstract implements UseCase
         return $this->getGateway()->getResource();
     }
 
-    public function getParams()
+    public function getParams(): array
     {
         return $this->getRequest()->getParams();
     }
@@ -69,9 +68,7 @@ abstract class UseCaseGatewayAbstract extends UseCaseAbstract implements UseCase
     private function getResponseCodeFromGatway()
     {
         $responseBody = $this->getGateway()->getResponseBody();
-        return isset($responseBody['code'])
-            ? $responseBody['code']
-            : $this->getGateway()->getResponseCode();
+        return $responseBody['code'] ?? $this->getGateway()->getResponseCode();
     }
 
 }

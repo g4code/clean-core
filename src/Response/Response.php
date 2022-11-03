@@ -3,44 +3,43 @@ namespace G4\CleanCore\Response;
 
 class Response
 {
-    private $_applicationResponseCode;
+    private $applicationResponseCode;
 
-    private $_formattedResource;
+    private $formattedResource;
 
-    private $_httpResponseCode;
+    private $httpResponseCode = null;
 
     //TODO: Drasko: Remove this!!!
-    private $_responseMessage;
+    private $responseMessage;
 
-    private $_rawResource;
+    private $rawResource;
 
     public function __construct()
     {
-        $this->_httpResponseCode = null;
     }
 
-    public function addPartToResponseObject($key, $value)
+    public function addPartToResponseObject($key, $value): self
     {
-        $this->_rawResource[$key] = $value;
+        $this->rawResource[$key] = $value;
         return $this;
     }
 
     public function getApplicationResponseCode()
     {
-        return $this->_applicationResponseCode;
+        return $this->applicationResponseCode;
     }
 
     public function getFormattedResource()
     {
-        return $this->_formattedResource;
+        return $this->formattedResource;
     }
 
-    public function getHttpResponseCode()
+    public function getHttpResponseCode(): int
     {
-        if ($this->_httpResponseCode === null) {
-            $this->_httpResponseCode = $this->hasResponseObject() ? 200 : 204;
+        if ($this->httpResponseCode === null) {
+            $this->httpResponseCode = $this->hasResponseObject() ? 200 : 204;
         }
-        return $this->_httpResponseCode;
+        return $this->httpResponseCode;
     }
 
     public function getHttpMessage()
@@ -50,53 +49,51 @@ class Response
 
     public function getResponseMessage()
     {
-        return $this->_responseMessage;
+        return $this->responseMessage;
     }
 
     public function getResponseObject()
     {
-        return $this->_rawResource;
+        return $this->rawResource;
     }
 
     public function getResponseObjectPart($key)
     {
-        return isset($this->_rawResource[$key])
-            ? $this->_rawResource[$key]
-            : null;
+        return $this->rawResource[$key] ?? null;
     }
 
-    public function hasResponseObject()
+    public function hasResponseObject(): bool
     {
-        return isset($this->_rawResource);
+        return isset($this->rawResource);
     }
 
-    public function setApplicationResponseCode($applicationResponseCode)
+    public function setApplicationResponseCode($applicationResponseCode): self
     {
-        $this->_applicationResponseCode = $applicationResponseCode;
+        $this->applicationResponseCode = $applicationResponseCode;
         return $this;
     }
 
-    public function setFormattedResource($formattedResource)
+    public function setFormattedResource($formattedResource): self
     {
-        $this->_formattedResource = $formattedResource;
+        $this->formattedResource = $formattedResource;
         return $this;
     }
 
-    public function setHttpResponseCode($httpResponseCode)
+    public function setHttpResponseCode($httpResponseCode): self
     {
-        $this->_httpResponseCode = $httpResponseCode;
+        $this->httpResponseCode = $httpResponseCode;
         return $this;
     }
 
-    public function setResponseMessage($value)
+    public function setResponseMessage($value): self
     {
-        $this->_responseMessage = $value;
+        $this->responseMessage = $value;
         return $this;
     }
 
-    public function setResponseObject($rawResource)
+    public function setResponseObject($rawResource): self
     {
-        $this->_rawResource = $rawResource;
+        $this->rawResource = $rawResource;
         return $this;
     }
 }

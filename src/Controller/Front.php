@@ -8,84 +8,84 @@ use G4\CleanCore\Dispatcher\Dispatcher;
 
 class Front
 {
-    private $_appNamespace;
+    private $appNamespace;
 
     /**
      * @var \G4\CleanCore\Dispatcher\Dispatcher
      */
-    private $_dispatcher;
+    private $dispatcher;
 
-    private $_formatter;
+    private $formatter;
 
     /**
      * @var \G4\CleanCore\Service\ServiceAbstract
      */
-    private $_service;
+    private $service;
 
     /**
      * @var \G4\CleanCore\UseCase\UseCaseAbstract
      */
-    private $_useCase;
+    private $useCase;
 
     /**
      * @var \G4\CleanCore\Request\Request
      */
-    private $_request;
+    private $request;
 
     /**
      * @var \G4\CleanCore\Response\Response
      */
-    private $_response;
+    private $response;
 
-    public function getResponse()
+    public function getResponse(): \G4\CleanCore\Response\Response
     {
-        return $this->_response;
+        return $this->response;
     }
 
-    public function run()
+    public function run(): void
     {
-        $this->_dispatcher
-            ->setRequest($this->_request)
-            ->setAppNamespace($this->_appNamespace);
+        $this->dispatcher
+            ->setRequest($this->request)
+            ->setAppNamespace($this->appNamespace);
 
-        $this->_dispatcher->isDispatchable()
-            ? $this->_dispatch()
-            : $this->_response->setHttpResponseCode(404);
+        $this->dispatcher->isDispatchable()
+            ? $this->dispatch()
+            : $this->response->setHttpResponseCode(404);
 
     }
 
-    public function setAppNamespace($appNamespace)
+    public function setAppNamespace($appNamespace): self
     {
-        $this->_appNamespace = $appNamespace;
+        $this->appNamespace = $appNamespace;
         return $this;
     }
 
-    public function setDispatcher(Dispatcher $dispatcher)
+    public function setDispatcher(Dispatcher $dispatcher): self
     {
-        $this->_dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
         return $this;
     }
 
-    public function setRequest(Request $request)
+    public function setRequest(Request $request): self
     {
-        $this->_request = $request;
+        $this->request = $request;
         return $this;
     }
 
-    public function setResponse(Response $response)
+    public function setResponse(Response $response): self
     {
-        $this->_response = $response;
+        $this->response = $response;
         return $this;
     }
 
-    private function _dispatch()
+    private function dispatch(): void
     {
-        $this->_service = $this->_dispatcher->getService();
-        $this->_service
-            ->setRequest($this->_request)
-            ->setResponse($this->_response)
+        $this->service = $this->dispatcher->getService();
+        $this->service
+            ->setRequest($this->request)
+            ->setResponse($this->response)
             ->run();
 
-        $this->_response = $this->_service->getFormattedResponse();
+        $this->response = $this->service->getFormattedResponse();
     }
 }

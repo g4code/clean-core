@@ -2,71 +2,61 @@
 
 namespace G4\CleanCore\Formatter\Collection;
 
-use G4\CleanCore\Formatter\Collection\CollectionAbstract;
-
 abstract class SliceAbstract extends CollectionAbstract
 {
-    public function format()
+    public function format(): array
     {
-        if ($this->_hasItems()) {
-            foreach ($this->_getResourceCollection() as $resource) {
-                $this->_formatOneResource($resource);
+        if ($this->hasItems()) {
+            foreach ($this->getResourceCollection() as $resource) {
+                $this->formatOneResource($resource);
             }
         }
-        return $this->_getPaginatorResponse();
+        return $this->getPaginatorResponse();
     }
 
-    public function isCollectionCountable()
+    public function isCollectionCountable(): bool
     {
-        return $this->_getResourceCollection() instanceof \Countable
-            || is_array($this->_getResourceCollection());
+        return is_countable($this->getResourceCollection());
     }
 
-    public function isCollectionIterator()
+    public function isCollectionIterator(): bool
     {
-        return $this->_getResourceCollection() instanceof \Iterator;
+        return $this->getResourceCollection() instanceof \Iterator;
     }
 
     //TODO: Drasko: this needs refactoring!
-    protected function _getPaginatorResponse()
+    protected function getPaginatorResponse(): array
     {
-        $totalItems = $this->_getTotalItemsCount();
+        $totalItems = $this->getTotalItemsCount();
         $resource   = $this->getResource();
         $data       = $this->getData();
 
-        return array(
-            'current_page_number' => !empty($resource) ? $this->getResource('page') : null,
-            'total_item_count'    => $totalItems,
-            'item_count_per_page' => !empty($resource) ? $this->getResource('per_page') : null,
-            'current_item_count'  => count($data),
-            'page_count'          => !empty($resource) ? ceil($totalItems / $this->getResource('per_page')) : 0,
-            'current_items'       => $data
-        );
+        return ['current_page_number' => !empty($resource) ? $this->getResource('page') : null, 'total_item_count'    => $totalItems, 'item_count_per_page' => !empty($resource) ? $this->getResource('per_page') : null, 'current_item_count'  => is_countable($data) ? count($data) : 0, 'page_count'          => !empty($resource) ? ceil($totalItems / $this->getResource('per_page')) : 0, 'current_items'       => $data];
     }
 
-    private function _collectionNotCountable()
+    private function collectionNotCountable()
     {
         throw new \Exception('Collection does not implement Countable', 500);
     }
 
-    private function _getCollectionCount()
+    private function getCollectionCount()
     {
-        $collection = $this->_getResourceCollection();
+        $collection = $this->getResourceCollection();
 
         return $this->isCollectionCountable()
             ? count($collection)
-            : $this->_collectionNotCountable();
+            : $this->collectionNotCountable();
     }
 
-    private function _hasItems()
+    private function hasItems(): bool
     {
-        return $this->_getCollectionCount() > 0;
+        return $this->getCollectionCount() > 0;
     }
 
-    private function _getTotalItemsCount()
+    private function getTotalItemsCount()
     {
-        return is_object($this->_getResourceCollection()) && method_exists($this->_getResourceCollection(), 'getTotalItemsCount')
-            ? $this->_getResourceCollection()->getTotalItemsCount()
-            : $this->_getCollectionCount();
+        return is_object($this->getResourceCollection()) && method_exists($this->getResourceCollection(), 'getTotalItemsCount')
+            ? $this->getResourceCollection()->getTotalItemsCount()
+            : $this->getCollectionCount();
     }
 }

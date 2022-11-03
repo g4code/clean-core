@@ -10,17 +10,17 @@ abstract class FormatterAbstract implements FormatterInterface
     /**
      * @var mixed
      */
-    private $_resource;
+    private $resource;
 
     public function addToResource($part, $value)
     {
-        $this->_resource[$part] = $value;
+        $this->resource[$part] = $value;
         return $this;
     }
 
     public function doesPartExistsInResource($part)
     {
-        return isset($this->_resource[$part]);
+        return isset($this->resource[$part]);
     }
 
     /**
@@ -30,20 +30,16 @@ abstract class FormatterAbstract implements FormatterInterface
     public function getResource($part = null)
     {
         return $part === null
-            ? $this->_resource
-            : $this->_getResourcePart($part);
+            ? $this->resource
+            : $this->getResourcePart($part);
     }
 
-    /**
-     * @return \G4\CleanCore\Factory\UseCase
-     */
-    public function getUseCaseFactoryInstance()
+    public function getUseCaseFactoryInstance(): \G4\CleanCore\Factory\UseCase
     {
         return new \G4\CleanCore\Factory\UseCase();
     }
 
     /**
-     * @param \G4\CleanCore\Formatter\FormatterAbstract $formatter
      * @param mixed $resource
      */
     public function reference(\G4\CleanCore\Formatter\FormatterAbstract $formatter, $resource)
@@ -59,17 +55,15 @@ abstract class FormatterAbstract implements FormatterInterface
      */
     public function setResource($resource)
     {
-        $this->_resource = $resource;
+        $this->resource = $resource;
         return $this;
     }
 
     /**
-     * @param string $useCaseName
      * @param string $resourcePart
-     * @param \G4\CleanCore\Request\Request $request
      * @return mixed
      */
-    public function useCaseReference($useCaseName, $resourcePart = null, Request $request = null)
+    public function useCaseReference(string $useCaseName, $resourcePart = null, Request $request = null)
     {
         return $this->getUseCaseFactoryInstance()
             ->setUseCaseName($useCaseName)
@@ -78,13 +72,12 @@ abstract class FormatterAbstract implements FormatterInterface
     }
 
     /**
-     * @param string $part
      * @return mixed
      */
-    private function _getResourcePart($part)
+    private function getResourcePart(string $part)
     {
         return $this->doesPartExistsInResource($part)
-            ? $this->_resource[$part]
+            ? $this->resource[$part]
             : null;
     }
 }
