@@ -97,7 +97,7 @@ class Request
 
     public function setAnonymizationRules($param, $rule): self
     {
-        if(isset($this->anonymizationRules[$param])) {
+        if (isset($this->anonymizationRules[$param])) {
             throw new \Exception("Rule for '{$param}' already exists.");
         }
 
@@ -109,10 +109,10 @@ class Request
     {
         $cleanParams = $this->getParams();
 
-        if(is_array($this->anonymizationRules)) {
+        if (is_array($this->anonymizationRules)) {
             foreach ($this->anonymizationRules as $key => $rule) {
-                if(isset($cleanParams[$key])) {
-                    if($rule === null) {
+                if (isset($cleanParams[$key])) {
+                    if ($rule === null) {
                         unset($cleanParams[$key]);
                     } else {
                         $cleanParams[$key] = is_callable($rule)

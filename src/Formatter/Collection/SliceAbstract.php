@@ -62,7 +62,8 @@ abstract class SliceAbstract extends CollectionAbstract
 
     private function getTotalItemsCount()
     {
-        return is_object($this->getResourceCollection()) && method_exists($this->getResourceCollection(), 'getTotalItemsCount')
+        return is_object($this->getResourceCollection())
+            && method_exists($this->getResourceCollection(), 'getTotalItemsCount')
             ? $this->getResourceCollection()->getTotalItemsCount()
             : $this->getCollectionCount();
     }

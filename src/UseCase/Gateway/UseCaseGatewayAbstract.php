@@ -48,7 +48,8 @@ abstract class UseCaseGatewayAbstract extends UseCaseAbstract implements UseCase
         !$this->getGateway()->isOk()
             ? $this->throwError()
             : $this->getResponse()->addPartToResponseObject(
-                'data', $this->getGatewayResource()
+                'data',
+                $this->getGatewayResource()
             )->setHttpResponseCode($this->getResponseCodeFromGatway());
     }
 
@@ -70,5 +71,4 @@ abstract class UseCaseGatewayAbstract extends UseCaseAbstract implements UseCase
         $responseBody = $this->getGateway()->getResponseBody();
         return $responseBody['code'] ?? $this->getGateway()->getResponseCode();
     }
-
 }

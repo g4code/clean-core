@@ -51,7 +51,6 @@ class Front
         $this->dispatcher->isDispatchable()
             ? $this->dispatch()
             : $this->response->setHttpResponseCode(404);
-
     }
 
     public function setAppNamespace($appNamespace): self

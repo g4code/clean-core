@@ -44,8 +44,7 @@ class Validation
 
     private function iterateTroughExceptions(): void
     {
-        foreach($this->exceptions as $oneException)
-        {
+        foreach ($this->exceptions as $oneException) {
             $this->addMessage($oneException);
         }
     }

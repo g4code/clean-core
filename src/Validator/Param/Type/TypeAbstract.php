@@ -7,7 +7,8 @@ use G4\CleanCore\Validator\Param\ParamAbstract;
 abstract class TypeAbstract extends ParamAbstract implements TypeInterface
 {
     public const ARRAY_VALUE_SEPARATOR = '|';
-    public const IS_VALID_META_STRICT = false; // @ToDo: This is a feature flag for invalid optional parameter value; Clean up when flag is removed (Sasa|08/2018)
+    // @ToDo: This is a feature flag for invalid optional parameter value; Clean up when flag is removed (Sasa|08/2018)
+    public const IS_VALID_META_STRICT = false;
 
     /**
      * @return TypeAbstract
@@ -76,7 +77,8 @@ abstract class TypeAbstract extends ParamAbstract implements TypeInterface
 
     public function isValidMetaStrict()
     {
-        return self::IS_VALID_META_STRICT; // @ToDo: This is a feature flag for invalid optional parameter value (Sasa|08/2018)
+        // @ToDo: This is a feature flag for invalid optional parameter value (Sasa|08/2018)
+        return self::IS_VALID_META_STRICT;
     }
 
     public function isValueEmptyString(): bool
@@ -123,14 +125,18 @@ abstract class TypeAbstract extends ParamAbstract implements TypeInterface
      */
     public function validValue()
     {
-        if ($this->isValidMetaStrict()) { // @ToDo: This is a feature flag for invalid optional parameter value; Clean up when flag is removed (Sasa|08/2018)
-            if (
-                $this->isValidMetaSet() && !$this->isInValidRange() && // value is invalid
-                !($this->isValueNull() && !$this->isRequiredMetaSet()) // null value is invalid only if parameter is required
+        if ($this->isValidMetaStrict()) {
+            // @ToDo: This is a feature flag for invalid optional parameter value;
+            // @ToDo: Clean up when flag is removed (Sasa|08/2018)
+            if ($this->isValidMetaSet() && !$this->isInValidRange() && // value is invalid
+                !($this->isValueNull() && !$this->isRequiredMetaSet())
+                // null value is invalid only if parameter is required
             ) {
                 throw new \G4\CleanCore\Exception\Validation($this->name, $this->value, $this->meta);
             }
-        } else { // @ToDo: This is an old incorrect state; Remove with feature flag for invalid optional parameter value (Sasa|08/2018)
+        } else {
+            // @ToDo: This is an old incorrect state;
+            // @ToDo: Remove with feature flag for invalid optional parameter value (Sasa|08/2018)
             if ($this->isValidMetaSet() && !$this->isInValidRange()) {
                 $this->value = null;
             }

@@ -51,9 +51,6 @@ class Dispatcher
         return $this;
     }
 
-    /**
-     * @param string $serviceNamespace
-     */
     public function setAppNamespace(string $appNamespace): self
     {
         $this->appNamespace = $appNamespace;
@@ -62,7 +59,12 @@ class Dispatcher
 
     private function constructFullServiceName(): self
     {
-        $this->fullServiceName = join('\\', [$this->appNamespace, 'Service', $this->getServiceName(), $this->getClassName()]);
+        $this->fullServiceName = implode('\\', [
+            $this->appNamespace,
+            'Service',
+            $this->getServiceName(),
+            $this->getClassName()
+        ]);
         return $this;
     }
 
@@ -74,8 +76,9 @@ class Dispatcher
     private function getServiceName(): string
     {
         return ucfirst(
-            preg_replace_callback('/-([a-z])/',
-                function($matches): string {
+            preg_replace_callback(
+                '/-([a-z])/',
+                function ($matches): string {
                     return strtoupper($matches[1]);
                 },
                 $this->request->getResourceName()
