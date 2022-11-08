@@ -50,7 +50,7 @@ abstract class FormatterAbstract implements FormatterInterface
     }
 
     /**
-     * @param mixed $response
+     * @param mixed $resource
      * @return FormatterAbstract
      */
     public function setResource($resource)
