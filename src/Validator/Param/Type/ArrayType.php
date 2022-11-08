@@ -4,9 +4,9 @@ namespace G4\CleanCore\Validator\Param\Type;
 
 class ArrayType extends TypeAbstract
 {
-    public function cast(): self
+    public function cast()
     {
-        if ($this->_isNotEmptyString()) {
+        if ($this->isNotEmptyString()) {
 
             $this->value = explode($this->getArrayValueSeparator(), $this->value);
         }
@@ -32,7 +32,7 @@ class ArrayType extends TypeAbstract
         return $this;
     }
 
-    protected function _isNotEmptyString(): bool
+    protected function isNotEmptyString(): bool
     {
         return !$this->isValueNull()
             && is_string($this->value)
