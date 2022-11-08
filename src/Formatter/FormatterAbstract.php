@@ -2,7 +2,6 @@
 
 namespace G4\CleanCore\Formatter;
 
-use G4\CleanCore\Formatter\FormatterInterface;
 use G4\CleanCore\Request\Request;
 
 abstract class FormatterAbstract implements FormatterInterface

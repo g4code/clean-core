@@ -6,7 +6,7 @@ class IntValidator extends TypeAbstract
 {
     public function cast()
     {
-        if ($this->isValueEmptyString()){
+        if ($this->isValueEmptyString()) {
             $this->value = null;
         }
 

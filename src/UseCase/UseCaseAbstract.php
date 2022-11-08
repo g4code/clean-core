@@ -31,7 +31,8 @@ abstract class UseCaseAbstract implements UseCaseInterface
             $this->getUseCaseFactoryInstance()
             ->setUseCaseName($useCaseName)
             ->setRequest($this->getRequest())
-            ->getResource());
+            ->getResource()
+        );
     }
 
     /**
@@ -72,7 +73,7 @@ abstract class UseCaseAbstract implements UseCaseInterface
      */
     public function reference(string $useCaseName, $resourcePart = null, Request $request = null)
     {
-        if(null === $request) {
+        if (null === $request) {
             $request = $this->getRequest();
         }
         return $this->getUseCaseFactoryInstance()

@@ -19,7 +19,7 @@ class Factory
     /**
      * @var \G4\CleanCore\Request\Request
      */
-    private $_request;
+    private $request;
 
     public function initBootstrap(): void
     {
@@ -46,7 +46,7 @@ class Factory
 
     public function setRequest(Request $request): self
     {
-        $this->_request = $request;
+        $this->request = $request;
         return $this;
     }
 
@@ -67,7 +67,7 @@ class Factory
             $bootstrapName    = $this->fullBootstrapName;
             $this->bootstrap = new $bootstrapName();
             $this->bootstrap
-                ->setRequest($this->_request)
+                ->setRequest($this->request)
                 ->init();
         }
     }

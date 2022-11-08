@@ -102,12 +102,9 @@ class Validator implements ValidatorInterface
     private function addToParams($paramName, $meta): void
     {
         try {
-
             $param = new Param($paramName, $this->request, $meta);
             $this->params[$paramName] = $param->getValue();
-
         } catch (\G4\CleanCore\Exception\Validation $exception) {
-
             $this->error->addException($exception);
         }
     }

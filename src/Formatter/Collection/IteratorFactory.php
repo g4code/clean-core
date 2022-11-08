@@ -13,12 +13,12 @@ class IteratorFactory
 
     public function getIterator(): \Zend\Paginator\Adapter\AdapterInterface
     {
-        return $this->_isIterator()
+        return $this->isIterator()
             ? new \Zend\Paginator\Adapter\Iterator($this->collection)
             : new \Zend\Paginator\Adapter\ArrayAdapter($this->collection);
     }
 
-    private function _isIterator(): bool
+    private function isIterator(): bool
     {
         return $this->collection instanceof \Iterator
             && $this->collection instanceof \Countable;

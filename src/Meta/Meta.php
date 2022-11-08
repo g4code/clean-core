@@ -15,6 +15,4 @@ class Meta
     {
         $this->data[] = $valueObject;
     }
-
-
 }

@@ -15,7 +15,6 @@ abstract class PaginationAbstract extends CollectionAbstract
         $this->setPaginator();
 
         if ($this->hasItems()) {
-
             foreach ($this->paginator as $resource) {
                 $this->formatOneResource($resource);
             }

@@ -7,12 +7,10 @@ class ArrayType extends TypeAbstract
     public function cast()
     {
         if ($this->isNotEmptyString()) {
-
             $this->value = explode($this->getArrayValueSeparator(), $this->value);
         }
 
         if ($this->isValueEmptyString()) {
-
             $this->value = null;
         }
 

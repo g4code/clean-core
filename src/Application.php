@@ -91,7 +91,7 @@ class Application
             $this
                 ->initBootstrap()
                 ->runFrontController();
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             $this->getError()
                 ->setException($exception)
                 ->setResponse($this->getResponse())
