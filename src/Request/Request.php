@@ -272,19 +272,29 @@ class Request
 
     /**
      * @param string $key
-     * @return int
+     * @return int|null
      */
     public function getInt($key)
     {
-        return filter_var($this->getParam($key), FILTER_VALIDATE_INT);
+        return filter_var($this->getParam($key), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
     }
 
     /**
      * @param string $key
-     * @return bool
+     * @return bool|null
      */
     public function getBoolean($key)
     {
-        return filter_var($this->getParam($key), FILTER_VALIDATE_BOOLEAN);
+        return filter_var($this->getParam($key), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+    }
+
+    /**
+     * @param string $key
+     * @return array|null
+     */
+    public function getArray($key)
+    {
+        $param = $this->getParam($key);
+        return $param ? (array) $param : null;
     }
 }
