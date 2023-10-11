@@ -11,11 +11,11 @@ class IteratorFactory
         $this->collection = $collection;
     }
 
-    public function getIterator(): \Zend\Paginator\Adapter\AdapterInterface
+    public function getIterator(): \Laminas\Paginator\Adapter\AdapterInterface
     {
         return $this->isIterator()
-            ? new \Zend\Paginator\Adapter\Iterator($this->collection)
-            : new \Zend\Paginator\Adapter\ArrayAdapter($this->collection);
+            ? new \Laminas\Paginator\Adapter\Iterator($this->collection)
+            : new \Laminas\Paginator\Adapter\ArrayAdapter($this->collection);
     }
 
     private function isIterator(): bool
