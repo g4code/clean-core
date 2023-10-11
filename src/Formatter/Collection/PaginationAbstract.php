@@ -2,8 +2,6 @@
 
 namespace G4\CleanCore\Formatter\Collection;
 
-use G4\CleanCore\Formatter\Collection\CollectionAbstract;
-
 abstract class PaginationAbstract extends CollectionAbstract
 {
 
@@ -54,7 +52,7 @@ abstract class PaginationAbstract extends CollectionAbstract
     protected function setPaginator(): self
     {
         $iteratorFactory = new \G4\CleanCore\Formatter\Collection\IteratorFactory($this->getResourceCollection());
-        $this->paginator = new \Zend\Paginator\Paginator($iteratorFactory->getIterator());
+        $this->paginator = new \Laminas\Paginator\Paginator($iteratorFactory->getIterator());
         $this->paginator
             ->setItemCountPerPage($this->getResourcePerPage())
             ->setCurrentPageNumber($this->getResourcePage());
