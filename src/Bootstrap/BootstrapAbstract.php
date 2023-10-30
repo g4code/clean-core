@@ -9,23 +9,16 @@ class BootstrapAbstract
     /**
      * @var \G4\CleanCore\Request\Request
      */
-    protected $_request;
+    protected $request;
 
-    /**
-     * @param \G4\CleanCore\Request\Request $request
-     * @return \G4\CleanCore\Bootstrap\Factory
-     */
-    public function setRequest(Request $request)
+    public function setRequest(Request $request): self
     {
-        $this->_request = $request;
+        $this->request = $request;
         return $this;
     }
 
-    /**
-     * @return \G4\CleanCore\Request\Request
-     */
-    public function getRequest()
+    public function getRequest(): \G4\CleanCore\Request\Request
     {
-        return $this->_request;
+        return $this->request;
     }
 }

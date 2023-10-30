@@ -11,11 +11,11 @@ class Param extends ParamAbstract
         return $this->factory()->getValue();
     }
 
-    private function factory()
+    private function factory(): object
     {
-        $className = class_exists($this->_meta['type'])
-            ? $this->_meta['type']
-            : 'G4\CleanCore\Validator\Param\Type\\' . $this->_meta['type'];
-        return new $className($this->_name, $this->getRequest(), $this->_meta);
+        $className = class_exists($this->meta['type'])
+            ? $this->meta['type']
+            : 'G4\CleanCore\Validator\Param\Type\\' . $this->meta['type'];
+        return new $className($this->name, $this->getRequest(), $this->meta);
     }
 }

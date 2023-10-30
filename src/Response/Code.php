@@ -8,12 +8,10 @@ class Code
 {
     public static function asMessage($code)
     {
-        return isset(Http::$messages[$code])
-            ? Http::$messages[$code]
-            : 'Unknown';
+        return Http::$messages[$code] ?? 'Unknown';
     }
 
-    public static function isValid($code)
+    public static function isValid($code): bool
     {
         return array_key_exists($code, Http::$messages);
     }

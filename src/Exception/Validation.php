@@ -4,26 +4,26 @@ namespace G4\CleanCore\Exception;
 
 class Validation extends \Exception
 {
-    protected $_meta;
+    protected $meta;
 
-    protected $_name;
+    protected $name;
 
-    protected $_value;
+    protected $value;
 
     public function __construct($name, $value, $meta)
     {
-        $this->_name  = $name;
-        $this->_value = $value;
-        $this->_meta  = $meta;
+        $this->name  = $name;
+        $this->value = $value;
+        $this->meta  = $meta;
     }
 
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
     
     public function getValue()
     {
-        return $this->_value;
+        return $this->value;
     }
 }

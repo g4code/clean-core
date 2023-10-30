@@ -4,8 +4,8 @@ namespace G4\CleanCore\Validator\Param\Type;
 
 class IntZeroPositive extends IntValidator
 {
-    public function type()
+    public function type(): bool
     {
-        return parent::type() && $this->_value >= 0;
+        return parent::type() && $this->value >= 0;
     }
 }

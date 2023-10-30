@@ -4,23 +4,23 @@ namespace G4\CleanCore\Formatter\Collection;
 
 class IteratorFactory
 {
-    private $_collection;
+    private $collection;
 
     public function __construct($collection)
     {
-        $this->_collection = $collection;
+        $this->collection = $collection;
     }
 
-    public function getIterator()
+    public function getIterator(): \Laminas\Paginator\Adapter\AdapterInterface
     {
-        return $this->_isIterator()
-            ? new \Zend\Paginator\Adapter\Iterator($this->_collection)
-            : new \Zend\Paginator\Adapter\ArrayAdapter($this->_collection);
+        return $this->isIterator()
+            ? new \Laminas\Paginator\Adapter\Iterator($this->collection)
+            : new \Laminas\Paginator\Adapter\ArrayAdapter($this->collection);
     }
 
-    private function _isIterator()
+    private function isIterator(): bool
     {
-        return $this->_collection instanceof \Iterator
-            && $this->_collection instanceof \Countable;
+        return $this->collection instanceof \Iterator
+            && $this->collection instanceof \Countable;
     }
 }

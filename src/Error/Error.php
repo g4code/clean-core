@@ -7,51 +7,51 @@ use G4\Constants\Http;
 
 class Error
 {
-    private $_exception;
+    private $exception;
 
-    private $_response;
+    private $response;
 
-    public function manage()
+    public function manage(): void
     {
-        $this->_response
-            ->setResponseMessage($this->_getFormattedResponseMessage())
-            ->setApplicationResponseCode($this->_exception->getCode())
-            ->setHttpResponseCode($this->_getHttpCode())
+        $this->response
+            ->setResponseMessage($this->getFormattedResponseMessage())
+            ->setApplicationResponseCode($this->exception->getCode())
+            ->setHttpResponseCode($this->getHttpCode())
             ->setResponseObject([
                 'error' => [
-                    'code'    => $this->_exception->getCode(),
-                    'message' => $this->_exception->getMessage(),
+                    'code' => $this->exception->getCode(),
+                    'message' => $this->exception->getMessage(),
                 ]
             ]);
     }
 
-    public function setException(\Exception $exception)
+    public function setException(\Exception $exception): self
     {
-        $this->_exception = $exception;
+        $this->exception = $exception;
         return $this;
     }
 
-    public function setResponse(Response $response)
+    public function setResponse(Response $response): self
     {
-        $this->_response = $response;
+        $this->response = $response;
         return $this;
     }
 
-    private function _getHttpCode()
+    private function getHttpCode()
     {
-        return \G4\CleanCore\Response\Code::isValid($this->_exception->getCode())
-            ? $this->_exception->getCode()
+        return \G4\CleanCore\Response\Code::isValid($this->exception->getCode())
+            ? $this->exception->getCode()
             : Http::CODE_500;
     }
 
-    private function _getFormattedResponseMessage()
+    private function getFormattedResponseMessage(): array
     {
-        return array(
-            'code'    => $this->_exception->getCode(),
-            'message' => $this->_exception->getMessage(),
-            'file'    => $this->_exception->getFile(),
-            'line'    => $this->_exception->getLine(),
-            'trace'   => $this->_exception->getTrace()
-        );
+        return [
+            'code' => $this->exception->getCode(),
+            'message' => $this->exception->getMessage(),
+            'file' => $this->exception->getFile(),
+            'line' => $this->exception->getLine(),
+            'trace' => $this->exception->getTrace()
+        ];
     }
 }

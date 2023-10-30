@@ -20,17 +20,17 @@ class Request
      * index, get, post, put, delete
      * @var string
      */
-    private $_method;
+    private $method;
 
     /**
      * @var string
      */
-    private $_module;
+    private $module;
 
     /**
      * @var array
      */
-    private $_params;
+    private $params = [];
 
     /**
      * @var string
@@ -41,7 +41,7 @@ class Request
      * Resource name
      * @var string
      */
-    private $_resourceName;
+    private $resourceName;
 
     /**
      * @var array
@@ -50,76 +50,54 @@ class Request
 
     public function __construct()
     {
-        $this->_params = array();
     }
 
-    /**
-     * @param array $whitelistParamKeys
-     * @return \G4\CleanCore\Request\Request
-     */
-    public function filterParams(array $whitelistParamKeys)
+    public function filterParams(array $whitelistParamKeys): self
     {
-        $this->_params = array_intersect_key($this->_params, array_flip($whitelistParamKeys));
+        $this->params = array_intersect_key($this->params, array_flip($whitelistParamKeys));
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMethod()
+    public function getMethod(): string
     {
-        return $this->_method;
+        return $this->method;
+    }
+
+    public function getModule(): string
+    {
+        return $this->module;
     }
 
     /**
-     * @return string
-     */
-    public function getModule()
-    {
-        return $this->_module;
-    }
-
-    /**
-     * @param string $key
      * @return null|int|string|array
      */
-    public function getParam($key)
+    public function getParam(string $key)
     {
         return $this->hasParam($key)
-            ? $this->_params[$key]
+            ? $this->params[$key]
             : null;
     }
 
-    /**
-     * @return array
-     */
-    public function getParams()
+    public function getParams(): array
     {
-        return $this->_params;
+        return $this->params;
     }
 
-    /**
-     * @return string
-     */
-    public function getRawInput()
+    public function getRawInput(): string
     {
         return $this->rawInput;
     }
 
-    /**
-     * @param string $key
-     * @return null|string
-     */
-    public function getServerVariable($key)
+    public function getServerVariable(string $key): ?string
     {
         return is_array($this->serverVariables) && isset($this->serverVariables[$key])
             ? $this->serverVariables[$key]
             : null;
     }
 
-    public function setAnonymizationRules($param, $rule)
+    public function setAnonymizationRules($param, $rule): self
     {
-        if(isset($this->anonymizationRules[$param])) {
+        if (isset($this->anonymizationRules[$param])) {
             throw new \Exception("Rule for '{$param}' already exists.");
         }
 
@@ -127,14 +105,14 @@ class Request
         return $this;
     }
 
-    public function getParamsAnonymized()
+    public function getParamsAnonymized(): array
     {
         $cleanParams = $this->getParams();
 
-        if(is_array($this->anonymizationRules)) {
+        if (is_array($this->anonymizationRules)) {
             foreach ($this->anonymizationRules as $key => $rule) {
-                if(isset($cleanParams[$key])) {
-                    if($rule === null) {
+                if (isset($cleanParams[$key])) {
+                    if ($rule === null) {
                         unset($cleanParams[$key]);
                     } else {
                         $cleanParams[$key] = is_callable($rule)
@@ -148,151 +126,105 @@ class Request
         return $cleanParams;
     }
 
-    /**
-     * @return string
-     */
-    public function getResourceName()
+    public function getResourceName(): string
     {
-        return $this->_resourceName;
+        return $this->resourceName;
     }
 
-    /**
-     * @param string $key
-     * @return bool
-     */
-    public function hasParam($key)
+    public function hasParam(string $key): bool
     {
-        return isset($this->_params[$key]);
+        return isset($this->params[$key]);
     }
 
-    public function isAjax()
+    public function isAjax(): bool
     {
         return (bool) $this->ajaxCall;
     }
 
     /**
      * @param array|string $params
-     * @return \G4\CleanCore\Request\Request
      */
-    public function mergeParams($params)
+    public function mergeParams($params): self
     {
-        $this->_params = array_merge($this->_params, $params);
+        $this->params = array_merge($this->params, $params);
         return $this;
     }
 
-    public function setAjaxCall($ajaxCall)
+    public function setAjaxCall(bool $ajaxCall): self
     {
         $this->ajaxCall = $ajaxCall;
         return $this;
     }
 
-    /**
-     * @param string $method
-     * @return \G4\CleanCore\Request\Request
-     */
-    public function setMethod($method)
+    public function setMethod(string $method): self
     {
-        $this->_method = $method;
+        $this->method = $method;
+        return $this;
+    }
+
+    public function setModule(string $module): self
+    {
+        $this->module = $module;
         return $this;
     }
 
     /**
-     * @param string $module
-     * @return \G4\CleanCore\Request\Request
-     */
-    public function setModule($module)
-    {
-        $this->_module = $module;
-        return $this;
-    }
-
-    /**
-     * @param string $key
      * @param mixed $value
-     * @return \G4\CleanCore\Request\Request
      */
-    public function setParam($key, $value)
+    public function setParam(string $key, $value): self
     {
-        $this->_params[$key] = $value;
+        $this->params[$key] = $value;
         return $this;
     }
 
     /**
      * @param array|string $params
-     * @return \G4\CleanCore\Request\Request
      */
-    public function setParams($params)
+    public function setParams($params): self
     {
         is_array($params)
-            ? ($this->_params = $params)
-            : parse_str($params, $this->_params);
+            ? ($this->params = $params)
+            : parse_str($params, $this->params);
 
         return $this;
     }
 
-    /**
-     * @param string $value
-     * @return \G4\CleanCore\Request\Request
-     */
-    public function setRawInput($value)
+    public function setRawInput(string $value): self
     {
         $this->rawInput = $value;
         return $this;
     }
 
-    /**
-     * @param string $resourceName
-     * @return \G4\CleanCore\Request\Request
-     */
-    public function setResourceName($resourceName)
+    public function setResourceName(string $resourceName): self
     {
-        $this->_resourceName = $resourceName;
+        $this->resourceName = $resourceName;
         return $this;
     }
 
-    /**
-     * @param array $value
-     * @return \G4\CleanCore\Request\Request
-     */
-    public function setServerVariables($value)
+    public function setServerVariables(array $value): self
     {
         $this->serverVariables = $value;
         return $this;
     }
 
-    /**
-     * @param string $key
-     * @return \G4\CleanCore\Request\Request
-     */
-    public function unsetParam($key)
+    public function unsetParam(string $key): self
     {
-        unset($this->_params[$key]);
+        unset($this->params[$key]);
         return $this;
     }
-
-    /**
-     * @param string $key
-     * @return int|null
-     */
-    public function getInt($key)
+  
+    public function getInt(string $key): ?int
     {
         return filter_var($this->getParam($key), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
     }
 
-    /**
-     * @param string $key
-     * @return bool|null
-     */
-    public function getBoolean($key)
+
+    public function getBoolean(string $key): ?bool
     {
         return filter_var($this->getParam($key), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
     }
 
-    /**
-     * @param string $key
-     * @return array|null
-     */
-    public function getArray($key)
+    public function getArray($key): ?array
     {
         $param = $this->getParam($key);
         return $param ? (array) $param : null;

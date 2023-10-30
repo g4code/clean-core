@@ -9,18 +9,18 @@ class StringValidator extends TypeAbstract
     public function cast()
     {
         if (!$this->isValueNull()) {
-            $this->_value = is_array($this->_value) || is_object($this->_value) ? $this->_value : strval($this->_value);
+            $this->value = is_array($this->value) || is_object($this->value) ? $this->value : (string) $this->value;
         }
         return $this;
     }
 
-    public function isValueNull()
+    public function isValueNull(): bool
     {
-        return $this->_value === null || $this->_value === '';
+        return $this->value === null || $this->value === '';
     }
 
-    public function type()
+    public function type(): bool
     {
-        return is_string($this->_value);
+        return is_string($this->value);
     }
 }

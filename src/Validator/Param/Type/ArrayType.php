@@ -2,42 +2,38 @@
 
 namespace G4\CleanCore\Validator\Param\Type;
 
-use G4\CleanCore\Validator\Param\Type\TypeAbstract;
-
 class ArrayType extends TypeAbstract
 {
     public function cast()
     {
-        if ($this->_isNotEmptyString()) {
-
-            $this->_value = explode($this->getArrayValueSeparator(), $this->_value);
+        if ($this->isNotEmptyString()) {
+            $this->value = explode($this->getArrayValueSeparator(), $this->value);
         }
 
         if ($this->isValueEmptyString()) {
-
-            $this->_value = null;
+            $this->value = null;
         }
 
         return $this;
     }
 
-    public function type()
+    public function type(): bool
     {
-        return is_array($this->_value);
+        return is_array($this->value);
     }
 
-    public function validValue()
+    public function validValue(): self
     {
-        if ($this->isValidMetaSet() && is_array($this->_value)) {
-            $this->_value = array_intersect($this->getValidValues(), $this->_value);
+        if ($this->isValidMetaSet() && is_array($this->value)) {
+            $this->value = array_intersect($this->getValidValues(), $this->value);
         }
         return $this;
     }
 
-    protected function _isNotEmptyString()
+    protected function isNotEmptyString(): bool
     {
         return !$this->isValueNull()
-            && is_string($this->_value)
+            && is_string($this->value)
             && !$this->isValueEmptyString();
     }
 }
