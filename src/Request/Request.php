@@ -212,19 +212,24 @@ class Request
         unset($this->params[$key]);
         return $this;
     }
-  
+
     public function getInt(string $key): ?int
     {
         return filter_var($this->getParam($key), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
     }
 
+    public function getString(string $key): ?string
+    {
+        $param = $this->getParam($key);
+        return $param ? (string) $param: null;
+    }
 
     public function getBoolean(string $key): ?bool
     {
         return filter_var($this->getParam($key), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
     }
 
-    public function getArray($key): ?array
+    public function getArray(string $key): ?array
     {
         $param = $this->getParam($key);
         return $param ? (array) $param : null;
