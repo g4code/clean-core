@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "799682b00213e4b95c1f27f0009e7e81",
+    "content-hash": "c037c59dfd614a6a56551ebb0136f744",
     "packages": [
         {
             "name": "g4/constants",
@@ -2104,7 +2104,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.3",
+        "php": ">=8.2",
         "ext-json": "*"
     },
     "platform-dev": [],
