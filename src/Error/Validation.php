@@ -9,9 +9,9 @@ class Validation
     /**
      * @var \G4\CleanCore\Exception\Validation[]
      */
-    private $exceptions = [];
+    private array $exceptions = [];
 
-    private $messages = [];
+    private array $messages = [];
 
     public function __construct()
     {

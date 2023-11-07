@@ -6,7 +6,7 @@ use G4\CleanCore\Formatter\FormatterAbstract;
 
 abstract class CollectionAbstract extends FormatterAbstract implements CollectionInterface
 {
-    private $data;
+    private array $data;
 
     public function __construct()
     {
@@ -19,7 +19,7 @@ abstract class CollectionAbstract extends FormatterAbstract implements Collectio
         return $this;
     }
 
-    public function format()
+    public function format(): array
     {
         foreach ($this->getResourceCollection() as $resource) {
             $this->formatOneResource($resource);
@@ -44,7 +44,7 @@ abstract class CollectionAbstract extends FormatterAbstract implements Collectio
         return $this;
     }
 
-    protected function formatOneResource($oneResource)
+    protected function formatOneResource($oneResource): void
     {
         $this
             ->addToResource('resource', $oneResource)

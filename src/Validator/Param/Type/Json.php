@@ -4,10 +4,10 @@ namespace G4\CleanCore\Validator\Param\Type;
 
 class Json extends ArrayType
 {
-    public function cast()
+    public function cast(): static
     {
         if ($this->isNotEmptyString()) {
-            $this->value = json_decode($this->value, true);
+            $this->value = json_decode((string) $this->value, true);
         }
 
         if ($this->isNotEmptyString() && json_last_error() !== JSON_ERROR_NONE) {

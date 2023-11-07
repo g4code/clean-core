@@ -5,48 +5,28 @@ namespace G4\CleanCore\Request;
 class Request
 {
 
-    /**
-     * @var bool
-     */
-    private $ajaxCall;
+    private ?bool $ajaxCall = null;
 
-    /**
-     * @var array
-     */
-    private $anonymizationRules;
+    private ?array $anonymizationRules = null;
 
     /**
      * Valid methods
      * index, get, post, put, delete
-     * @var string
      */
-    private $method;
+    private ?string $method = null;
 
-    /**
-     * @var string
-     */
-    private $module;
+    private ?string $module = null;
 
-    /**
-     * @var array
-     */
-    private $params = [];
+    private array $params = [];
 
-    /**
-     * @var string
-     */
-    private $rawInput;
+    private ?string $rawInput = null;
 
     /**
      * Resource name
-     * @var string
      */
-    private $resourceName;
+    private ?string $resourceName = null;
 
-    /**
-     * @var array
-     */
-    private $serverVariables;
+    private ?array $serverVariables = null;
 
     public function __construct()
     {
@@ -68,10 +48,7 @@ class Request
         return $this->module;
     }
 
-    /**
-     * @return null|int|string|array
-     */
-    public function getParam(string $key)
+    public function getParam(string $key): mixed
     {
         return $this->hasParam($key)
             ? $this->params[$key]
@@ -98,7 +75,7 @@ class Request
     public function setAnonymizationRules($param, $rule): self
     {
         if (isset($this->anonymizationRules[$param])) {
-            throw new \Exception("Rule for '{$param}' already exists.");
+            throw new \Exception("Rule for '$param' already exists.");
         }
 
         $this->anonymizationRules[$param] = $rule;
@@ -141,10 +118,7 @@ class Request
         return (bool) $this->ajaxCall;
     }
 
-    /**
-     * @param array|string $params
-     */
-    public function mergeParams($params): self
+    public function mergeParams(array|string $params): self
     {
         $this->params = array_merge($this->params, $params);
         return $this;
@@ -168,19 +142,13 @@ class Request
         return $this;
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function setParam(string $key, $value): self
+    public function setParam(string $key, mixed $value): self
     {
         $this->params[$key] = $value;
         return $this;
     }
 
-    /**
-     * @param array|string $params
-     */
-    public function setParams($params): self
+    public function setParams(array|string $params): self
     {
         is_array($params)
             ? ($this->params = $params)

@@ -6,7 +6,7 @@ class Email extends StringValidator
 {
     public function type(): bool
     {
-        $this->value = preg_replace('/\s+/', '+', trim($this->value));
+        $this->value = preg_replace('/\s+/', '+', trim((string) $this->value));
         return parent::type()
             && filter_var($this->value, FILTER_VALIDATE_EMAIL);
     }
