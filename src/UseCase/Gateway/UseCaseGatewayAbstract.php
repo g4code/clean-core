@@ -16,9 +16,12 @@ abstract class UseCaseGatewayAbstract extends UseCaseAbstract implements UseCase
 
     /**
      * @return GatewayInterface
+     * @deprecated
      */
     public function getGateway()
     {
+        trigger_error('Method ' . __METHOD__ . ' is deprecated.', E_USER_DEPRECATED);
+
         if (!$this->gateway instanceof GatewayInterface) {
             $this->gateway = $this->getGatewayInstance();
         }
@@ -35,7 +38,7 @@ abstract class UseCaseGatewayAbstract extends UseCaseAbstract implements UseCase
         return $this->getRequest()->getParams();
     }
 
-    public function run()
+    public function run(): void
     {
         $this->getGateway()
             ->setParams($this->getParams())
@@ -43,7 +46,7 @@ abstract class UseCaseGatewayAbstract extends UseCaseAbstract implements UseCase
         $this->addToResponse();
     }
 
-    private function addToResponse()
+    private function addToResponse(): void
     {
         !$this->getGateway()->isOk()
             ? $this->throwError()
@@ -53,7 +56,7 @@ abstract class UseCaseGatewayAbstract extends UseCaseAbstract implements UseCase
             )->setHttpResponseCode($this->getResponseCodeFromGatway());
     }
 
-    private function throwError()
+    private function throwError(): never
     {
         $this->getResponse()->addPartToResponseObject(Format::FORMAT, Format::JSON);
 

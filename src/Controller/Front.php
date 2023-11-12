@@ -8,34 +8,15 @@ use G4\CleanCore\Dispatcher\Dispatcher;
 
 class Front
 {
-    private $appNamespace;
+    private string $appNamespace;
 
-    /**
-     * @var \G4\CleanCore\Dispatcher\Dispatcher
-     */
-    private $dispatcher;
+    private ?\G4\CleanCore\Dispatcher\Dispatcher $dispatcher = null;
 
-    private $formatter;
+    private ?\G4\CleanCore\Service\ServiceAbstract $service = null;
 
-    /**
-     * @var \G4\CleanCore\Service\ServiceAbstract
-     */
-    private $service;
+    private ?\G4\CleanCore\Request\Request $request = null;
 
-    /**
-     * @var \G4\CleanCore\UseCase\UseCaseAbstract
-     */
-    private $useCase;
-
-    /**
-     * @var \G4\CleanCore\Request\Request
-     */
-    private $request;
-
-    /**
-     * @var \G4\CleanCore\Response\Response
-     */
-    private $response;
+    private ?\G4\CleanCore\Response\Response $response = null;
 
     public function getResponse(): \G4\CleanCore\Response\Response
     {

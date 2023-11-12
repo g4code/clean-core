@@ -2,14 +2,11 @@
 
 namespace G4\CleanCore\Bootstrap;
 
-use \G4\CleanCore\Request\Request;
+use G4\CleanCore\Request\Request;
 
 class BootstrapAbstract
 {
-    /**
-     * @var \G4\CleanCore\Request\Request
-     */
-    protected $request;
+    protected Request $request;
 
     public function setRequest(Request $request): self
     {
@@ -17,7 +14,7 @@ class BootstrapAbstract
         return $this;
     }
 
-    public function getRequest(): \G4\CleanCore\Request\Request
+    public function getRequest(): Request
     {
         return $this->request;
     }

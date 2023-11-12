@@ -4,9 +4,7 @@ namespace G4\CleanCore\Formatter\Collection;
 
 abstract class PaginationAbstract extends CollectionAbstract
 {
-
-    private $paginator;
-
+    private \Laminas\Paginator\Paginator $paginator;
 
     public function format(): array
     {

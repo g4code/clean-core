@@ -3,54 +3,40 @@
 namespace G4\CleanCore\Factory;
 
 use G4\CleanCore\Request\Request;
+use G4\CleanCore\Response\Response;
+use G4\CleanCore\UseCase\UseCaseAbstract;
 
 class UseCase
 {
-    /**
-     * @var \G4\CleanCore\Request\Request
-     */
-    private $request;
+    private ?Request $request = null;
 
-    /**
-     * @var \G4\CleanCore\Response\Response
-     */
-    private $response;
+    private ?Response $response = null;
 
-    /**
-     * @var \G4\CleanCore\UseCase\UseCaseAbstract
-     */
-    private $useCase;
+    private UseCaseAbstract $useCase;
 
-    /**
-     * @var string
-     */
-    private $useCaseName;
+    private ?string $useCaseName = null;
 
     /**
      * @throws \Exception
      */
-    public function getRequest(): \G4\CleanCore\Request\Request
+    public function getRequest(): Request
     {
-        if (!$this->request instanceof \G4\CleanCore\Request\Request) {
+        if (!$this->request instanceof Request) {
             throw new \Exception('Request must be instance of \G4\CleanCore\Request\Request');
         }
         return $this->request;
     }
 
-    /**
-     * @param string $part
-     * @return mixed
-     */
-    public function getResource($part = null)
+    public function getResource(string $part = null): mixed
     {
         return $part === null
             ? $this->getResponse()->getResponseObject()
             : $this->getResponse()->getResponseObjectPart($part);
     }
 
-    public function getResponse(): \G4\CleanCore\Response\Response
+    public function getResponse(): Response
     {
-        if (!$this->response instanceof \G4\CleanCore\Response\Response) {
+        if (!$this->response instanceof Response) {
             $this->setResponse();
         }
         return $this->response;
@@ -59,15 +45,15 @@ class UseCase
     /**
      * @throws \Exception
      */
-    public function getUseCase(): \G4\CleanCore\UseCase\UseCaseAbstract
+    public function getUseCase(): UseCaseAbstract
     {
-        if (!$this->useCase instanceof \G4\CleanCore\UseCase\UseCaseAbstract) {
+        if (!$this->useCase instanceof UseCaseAbstract) {
             $this->factory();
         }
         return $this->useCase;
     }
 
-    public function setRequest(Request $request): self
+    public function setRequest(Request $request = null): self
     {
         $this->request = $request;
         return $this;

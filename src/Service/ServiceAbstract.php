@@ -9,27 +9,15 @@ use G4\CleanCore\Request\Request;
 abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
 {
 
-    /**
-     * @var \G4\CleanCore\Request\Request
-     */
-    private $request;
+    private ?\G4\CleanCore\Request\Request $request = null;
 
-    /**
-     * @var \G4\CleanCore\Response\Response
-     */
-    private $response;
+    private ?\G4\CleanCore\Response\Response $response = null;
 
-    /**
-     * @var \G4\CleanCore\UseCase\UseCaseAbstract
-     */
-    private $useCase;
+    private ?\G4\CleanCore\UseCase\UseCaseAbstract $useCase = null;
 
-    /**
-     * @var \G4\CleanCore\Validator\Validator
-     */
-    private $validator;
+    private ?\G4\CleanCore\Validator\Validator $validator = null;
 
-    public function areParamsValid()
+    public function areParamsValid(): bool
     {
         return $this->getValidator()
             ->setRequest($this->request)
@@ -40,7 +28,7 @@ abstract class ServiceAbstract implements \G4\CleanCore\Service\ServiceInterface
 
     public function getFormattedResponse(): \G4\CleanCore\Response\Response
     {
-        if (!method_exists($this->useCase, 'getFormatterInstance')) {
+        if ($this->useCase && !method_exists($this->useCase, 'getFormatterInstance')) {
             $this->response->setResponseObject($this->getFormattedResource());
         }
         return $this->response;

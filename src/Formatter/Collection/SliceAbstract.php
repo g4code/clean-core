@@ -41,11 +41,18 @@ abstract class SliceAbstract extends CollectionAbstract
         ];
     }
 
-    private function collectionNotCountable()
+    /**
+     * @throws \Exception
+     */
+    private function collectionNotCountable(): never
     {
         throw new \Exception('Collection does not implement Countable', 500);
     }
 
+    /**
+     * @return int|never|null
+     * @throws \Exception
+     */
     private function getCollectionCount()
     {
         $collection = $this->getResourceCollection();
@@ -60,6 +67,10 @@ abstract class SliceAbstract extends CollectionAbstract
         return $this->getCollectionCount() > 0;
     }
 
+    /**
+     * @return int|never|null
+     * @throws \Exception
+     */
     private function getTotalItemsCount()
     {
         return is_object($this->getResourceCollection())

@@ -7,9 +7,9 @@ use G4\Constants\Http;
 
 class Error
 {
-    private $exception;
+    private \Exception $exception;
 
-    private $response;
+    private Response $response;
 
     public function manage(): void
     {

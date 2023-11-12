@@ -6,27 +6,20 @@ use G4\CleanCore\Request\Request;
 
 abstract class FormatterAbstract implements FormatterInterface
 {
-    /**
-     * @var mixed
-     */
-    private $resource;
+    private mixed $resource;
 
-    public function addToResource($part, $value)
+    public function addToResource($part, $value): self
     {
         $this->resource[$part] = $value;
         return $this;
     }
 
-    public function doesPartExistsInResource($part)
+    public function doesPartExistsInResource($part): bool
     {
         return isset($this->resource[$part]);
     }
 
-    /**
-     * @param string $part
-     * @return mixed
-     */
-    public function getResource($part = null)
+    public function getResource(string $part = null): mixed
     {
         return $part === null
             ? $this->resource
@@ -38,31 +31,20 @@ abstract class FormatterAbstract implements FormatterInterface
         return new \G4\CleanCore\Factory\UseCase();
     }
 
-    /**
-     * @param mixed $resource
-     */
-    public function reference(\G4\CleanCore\Formatter\FormatterAbstract $formatter, $resource)
+    public function reference(\G4\CleanCore\Formatter\FormatterAbstract $formatter, mixed $resource)
     {
         return $formatter
             ->setResource($resource)
             ->format();
     }
 
-    /**
-     * @param mixed $resource
-     * @return FormatterAbstract
-     */
-    public function setResource($resource)
+    public function setResource(mixed $resource): self
     {
         $this->resource = $resource;
         return $this;
     }
 
-    /**
-     * @param string $resourcePart
-     * @return mixed
-     */
-    public function useCaseReference(string $useCaseName, $resourcePart = null, Request $request = null)
+    public function useCaseReference(string $useCaseName, string $resourcePart = null, Request $request = null): mixed
     {
         return $this->getUseCaseFactoryInstance()
             ->setUseCaseName($useCaseName)
@@ -70,10 +52,7 @@ abstract class FormatterAbstract implements FormatterInterface
             ->getResource($resourcePart);
     }
 
-    /**
-     * @return mixed
-     */
-    private function getResourcePart(string $part)
+    private function getResourcePart(string $part): mixed
     {
         return $this->doesPartExistsInResource($part)
             ? $this->resource[$part]
