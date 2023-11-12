@@ -148,11 +148,16 @@ class Request
         return $this;
     }
 
-    public function setParams(array|string $params): self
+    public function setParams(array|string|null $params): self
     {
-        is_array($params)
-            ? ($this->params = $params)
-            : parse_str($params, $this->params);
+        if (is_array($params)) {
+            $this->params = $params;
+            return $this;
+        }
+
+        if ($params) {
+            parse_str($params, $this->params);
+        }
 
         return $this;
     }
