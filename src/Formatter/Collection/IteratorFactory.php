@@ -4,11 +4,8 @@ namespace G4\CleanCore\Formatter\Collection;
 
 class IteratorFactory
 {
-    private $collection;
-
-    public function __construct($collection)
+    public function __construct(private $collection)
     {
-        $this->collection = $collection;
     }
 
     public function getIterator(): \Laminas\Paginator\Adapter\AdapterInterface

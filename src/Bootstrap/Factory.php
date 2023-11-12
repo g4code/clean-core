@@ -6,20 +6,13 @@ use G4\CleanCore\Request\Request;
 
 class Factory
 {
-    /** @var BootstrapInterface */
-    private $bootstrap;
+    private BootstrapInterface $bootstrap;
 
-    /**
-     * @var string
-     */
-    private $appNamespace;
+    private ?string $appNamespace = null;
 
-    private $fullBootstrapName;
+    private string $fullBootstrapName;
 
-    /**
-     * @var \G4\CleanCore\Request\Request
-     */
-    private $request;
+    private ?Request $request = null;
 
     public function initBootstrap(): void
     {
@@ -30,14 +23,11 @@ class Factory
         }
     }
 
-    public function getBootstrap(): \G4\CleanCore\Bootstrap\BootstrapInterface
+    public function getBootstrap(): BootstrapInterface
     {
         return $this->bootstrap;
     }
 
-    /**
-     * @param string $serviceNamespace
-     */
     public function setAppNamespace(string $appNamespace): self
     {
         $this->appNamespace = $appNamespace;
@@ -52,7 +42,7 @@ class Factory
 
     private function constructFullBootstrapName(): self
     {
-        $this->fullBootstrapName = join('\\', [$this->appNamespace, 'Bootstrap']);
+        $this->fullBootstrapName = implode('\\', [$this->appNamespace, 'Bootstrap']);
         return $this;
     }
 
