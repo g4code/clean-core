@@ -4,10 +4,10 @@ namespace G4\CleanCore\Validator\Param\Type;
 
 class ArrayType extends TypeAbstract
 {
-    public function cast()
+    public function cast(): static
     {
         if ($this->isNotEmptyString()) {
-            $this->value = explode($this->getArrayValueSeparator(), $this->value);
+            $this->value = explode($this->getArrayValueSeparator(), (string) $this->value);
         }
 
         if ($this->isValueEmptyString()) {

@@ -7,16 +7,9 @@ use G4\CleanCore\Request\Request;
 
 abstract class UseCaseAbstract implements UseCaseInterface
 {
-    /**
-     * @var Request
-     */
-    private $request;
+    private ?\G4\CleanCore\Request\Request $request = null;
 
-    /**
-     *
-     * @var Response
-     */
-    private $response;
+    private \G4\CleanCore\Response\Response $response;
 
     private $formatter;
 
@@ -25,7 +18,7 @@ abstract class UseCaseAbstract implements UseCaseInterface
         $this->setResponse(new Response());
     }
 
-    public function forward(string $useCaseName)
+    public function forward(string $useCaseName): void
     {
         $this->getResponse()->setResponseObject(
             $this->getUseCaseFactoryInstance()
@@ -35,18 +28,12 @@ abstract class UseCaseAbstract implements UseCaseInterface
         );
     }
 
-    /**
-     * @return \G4\CleanCore\Request\Request
-     */
-    public function getRequest()
+    public function getRequest(): ?Request
     {
         return $this->request;
     }
 
-    /**
-     * @return Response
-     */
-    public function getResponse()
+    public function getResponse(): Response
     {
         if (method_exists($this, 'getFormatterInstance') && $this->response->hasResponseObject()) {
             $formattedResource = $this->getFormatterInstance()
@@ -67,11 +54,8 @@ abstract class UseCaseAbstract implements UseCaseInterface
     /**
      * Factory method for use of a new UseCase class
      * Returns whole resource or just one part
-     *
-     * @param string $resourcePart
-     * @return mixed
      */
-    public function reference(string $useCaseName, $resourcePart = null, Request $request = null)
+    public function reference(string $useCaseName, string $resourcePart = null, Request $request = null): mixed
     {
         if (null === $request) {
             $request = $this->getRequest();
@@ -82,19 +66,13 @@ abstract class UseCaseAbstract implements UseCaseInterface
             ->getResource($resourcePart);
     }
 
-    /**
-     * @return UseCaseAbstract
-     */
-    public function setRequest(Request $request)
+    public function setRequest(Request $request): self
     {
         $this->request = $request;
         return $this;
     }
 
-    /**
-     * @return UseCaseAbstract
-     */
-    public function setResponse(Response $response)
+    public function setResponse(Response $response): self
     {
         $this->response = $response;
         return $this;

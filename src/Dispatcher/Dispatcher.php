@@ -7,31 +7,19 @@ use G4\CleanCore\Request\Request;
 
 class Dispatcher
 {
-    /**
-     * @var string
-     */
-    private $fullServiceName;
+    private ?string $fullServiceName = null;
 
-    /**
-     * @var Request
-     */
-    private $request;
+    private ?Request $request = null;
 
-    /**
-     * @var ServiceAbstract
-     */
-    private $service = null;
+    private ?ServiceAbstract $service = null;
 
-    /**
-     * @var string
-     */
-    private $appNamespace;
+    private ?string $appNamespace = null;
 
     public function __construct()
     {
     }
 
-    public function getService(): \G4\CleanCore\Service\ServiceAbstract
+    public function getService(): ServiceAbstract
     {
         return $this->service;
     }
@@ -78,9 +66,7 @@ class Dispatcher
         return ucfirst(
             preg_replace_callback(
                 '/-([a-z])/',
-                function ($matches): string {
-                    return strtoupper($matches[1]);
-                },
+                fn($matches): string => strtoupper((string) $matches[1]),
                 $this->request->getResourceName()
             )
         );

@@ -5,7 +5,7 @@ namespace G4\CleanCore\Meta;
 class Meta
 {
 
-    private $data = [];
+    private array $data = [];
 
     public function __construct()
     {

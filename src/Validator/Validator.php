@@ -7,50 +7,32 @@ use G4\CleanCore\Request\Request;
 
 class Validator implements ValidatorInterface
 {
-    public const TYPE_ARRAY = 'ArrayType';
-    public const TYPE_JSON = 'Json';
-    public const TYPE_DATE = 'Date';
-    public const TYPE_EMAIL = 'Email';
-    public const TYPE_INT = 'IntValidator';
-    public const TYPE_INT_POSITIVE = 'IntPositive';
-    public const TYPE_INT_NEGATIVE = 'IntNegative';
-    public const TYPE_INT_ZERO_POSITIVE = 'IntZeroPositive';
-    public const TYPE_INT_ZERO_NEGATIVE = 'IntZeroNegative';
-    public const TYPE_IP = 'Ip';
-    public const TYPE_MD5 = 'Md5';
-    public const TYPE_STRING = 'StringValidator';
-    public const TYPE_STRING_VALID_JSON = 'StringValidJson';
-    public const TYPE_URL = 'Url';
+    final public const TYPE_ARRAY = 'ArrayType';
+    final public const TYPE_JSON = 'Json';
+    final public const TYPE_DATE = 'Date';
+    final public const TYPE_EMAIL = 'Email';
+    final public const TYPE_INT = 'IntValidator';
+    final public const TYPE_INT_POSITIVE = 'IntPositive';
+    final public const TYPE_INT_NEGATIVE = 'IntNegative';
+    final public const TYPE_INT_ZERO_POSITIVE = 'IntZeroPositive';
+    final public const TYPE_INT_ZERO_NEGATIVE = 'IntZeroNegative';
+    final public const TYPE_IP = 'Ip';
+    final public const TYPE_MD5 = 'Md5';
+    final public const TYPE_STRING = 'StringValidator';
+    final public const TYPE_STRING_VALID_JSON = 'StringValidJson';
+    final public const TYPE_URL = 'Url';
 
-    /**
-     * @var array
-     */
-    private $meta;
+    private ?array $meta = null;
 
-    /**
-     * @var array
-     */
-    private $params = [];
+    private array $params = [];
 
-    /**
-     * @var Request
-     */
-    private $request;
+    private ?\G4\CleanCore\Request\Request $request = null;
 
-    /**
-     * @var bool
-     */
-    private $valid = true;
+    private bool $valid = true;
 
-    /**
-     * @var \G4\CleanCore\Error\Validation
-     */
-    private $error;
+    private readonly \G4\CleanCore\Error\Validation $error;
 
-    /**
-     * @var array
-     */
-    private $whitelistParams = [];
+    private array $whitelistParams = [];
 
 
     public function __construct()

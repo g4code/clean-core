@@ -30,6 +30,10 @@ update:
 	&& php composer.phar update \
 	&& /bin/echo -e "${TITLE} dependencies updated"
 
+psalm-check:
+	@/bin/echo -e "${TITLE} psalm check started..." \
+	&& php ./vendor/bin/psalm --no-cache --show-info=false
+
 .PHONY: all
 .PHONY: clean-composer-lock
 .PHONY: install update self-update

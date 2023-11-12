@@ -7,7 +7,6 @@ use G4\Constants\Parameters;
 
 final class Gateway extends FormatterAbstract
 {
-
     public function format()
     {
         $data = $this->getResource(Parameters::DATA);

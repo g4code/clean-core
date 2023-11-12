@@ -9,35 +9,17 @@ use G4\CleanCore\Dispatcher\Dispatcher;
 
 class Application
 {
-    /**
-     * @var \G4\CleanCore\Bootstrap\Factory
-     */
-    private $bootstrapFactory;
+    private ?\G4\CleanCore\Bootstrap\Factory $bootstrapFactory = null;
 
-    /**
-     * @var \G4\CleanCore\Error\Error
-     */
-    private $error;
+    private ?\G4\CleanCore\Error\Error $error = null;
 
-    /**
-     * @var \G4\CleanCore\Controller\Front
-     */
-    private $frontController;
+    private ?\G4\CleanCore\Controller\Front $frontController = null;
 
-    /**
-     * @var Request
-     */
-    private $request;
+    private ?\G4\CleanCore\Request\Request $request = null;
 
-    /**
-     * @var Response
-     */
-    private $response;
+    private ?\G4\CleanCore\Response\Response $response = null;
 
-    /**
-     * @var string
-     */
-    private $appNamespace;
+    private ?string $appNamespace = null;
 
 
     public function getAppNamespace(): string
