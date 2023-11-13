@@ -4,7 +4,7 @@ namespace G4\CleanCore\Bootstrap;
 
 use G4\CleanCore\Request\Request;
 
-class BootstrapAbstract
+abstract class BootstrapAbstract implements BootstrapInterface
 {
     protected Request $request;
 
@@ -17,5 +17,12 @@ class BootstrapAbstract
     public function getRequest(): Request
     {
         return $this->request;
+    }
+
+    abstract public function init();
+
+    public function getAllowedMedia()
+    {
+        return [];
     }
 }
