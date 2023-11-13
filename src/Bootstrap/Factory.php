@@ -16,12 +16,10 @@ class Factory
 
     public function initBootstrap(): void
     {
-        if (!$this->bootstrap instanceof BootstrapInterface) {
             $this
                 ->constructFullBootstrapName()
                 ->bootstrapFactory();
         }
-    }
 
     public function getBootstrap(): BootstrapInterface
     {

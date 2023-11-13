@@ -12,7 +12,7 @@ class UseCase
 
     private ?Response $response = null;
 
-    private UseCaseAbstract $useCase;
+    private ?UseCaseAbstract $useCase = null;
 
     private ?string $useCaseName = null;
 
