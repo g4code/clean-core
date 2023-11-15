@@ -7,7 +7,7 @@ use G4\CleanCore\Request\Request;
 
 abstract class UseCaseAbstract implements UseCaseInterface
 {
-    private ?\G4\CleanCore\Request\Request $request = null;
+    private \G4\CleanCore\Request\Request $request;
 
     private \G4\CleanCore\Response\Response $response;
 
@@ -15,6 +15,7 @@ abstract class UseCaseAbstract implements UseCaseInterface
 
     public function __construct()
     {
+        $this->request = new Request();
         $this->setResponse(new Response());
     }
 
@@ -28,7 +29,7 @@ abstract class UseCaseAbstract implements UseCaseInterface
         );
     }
 
-    public function getRequest(): ?Request
+    public function getRequest(): Request
     {
         return $this->request;
     }
